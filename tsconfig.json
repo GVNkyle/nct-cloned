@@ -1,0 +1,60 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2020",
+    "module": "es2020",
+    "lib": [
+      "es2020",
+      "dom"
+    ],
+    "paths": {
+      "@services/*": [
+        "src/app/core/services/*"
+      ],
+      "@models/*": [
+        "src/app/core/models/*"
+      ],
+      "@utilities/*": [
+        "src/app/core/helpers/utilities/*"
+      ],
+      "@params/*": [
+        "src/app/core/helpers/params/*"
+      ],
+      "@constants/*": [
+        "src/app/core/constants/*"
+      ],
+      "@guards/*": [
+        "src/app/core/guards/*"
+      ],
+      "@resolvers/*": [
+        "src/app/core/resolvers/*"
+      ],
+      "@env/*": [
+        "src/environments/*"
+      ],
+      "@directives/*": [
+        "src/app/core/directive/*"
+      ]
+    },
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}

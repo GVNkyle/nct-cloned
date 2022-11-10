@@ -1,0 +1,229 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --deg: 5deg;
+    --base: #3B82F6;
+    --second: #3B82F6;
+    --trackball: var(--base);
+    --range: 0%;
+    --bg: #10252f;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+.line {
+    position: relative;
+}
+
+.line::after {
+    position: absolute;
+    content: "";
+    width: 1px;
+    height: 15px;
+    background-color: rgba(28, 30, 32, 0.88);
+    right: 0;
+    transform: translate(0, -50%);
+    top: 50%;
+}
+
+.sidebar-parent {
+    animation: height 0.3s ease-in;
+}
+
+.sidebar-child {
+    display: none;
+    animation: height 0.3s ease-in;
+}
+
+.sidebar-parent.active .sidebar-child {
+    display: block;
+}
+
+// .lazy-load-image-background {
+//     width: 100% !important;
+// }
+
+@keyframes height {
+    to {
+        height: 200px;
+        opacity: 1;
+    }
+
+    from {
+        height: 0%;
+        opacity: 0;
+    }
+}
+
+.line-clamp-1,
+.line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
+.line-clamp-1 {
+    -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+    -webkit-line-clamp: 2;
+}
+
+.line-clamp-2.show-all {
+    -webkit-line-clamp: 100;
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    position: relative;
+
+    &:focus {
+        outline: none;
+
+        &::-webkit-slider-thumb {
+            // transform: scale(3);
+            // transition: 0.5s all ease;
+        }
+    }
+
+    &:before {
+        position: absolute;
+        content: "";
+        width: var(--range);
+        height: 2px;
+        background: var(--second);
+    }
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    background: var(--base);
+    height: 2px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    border: none;
+    -webkit-appearance: none;
+    background-color: var(--trackball);
+    margin-top: -3.5px;
+    z-index: 99;
+    position: relative;
+    transition: 0.5s all ease;
+}
+
+#value {
+    position: absolute;
+    left: var(--range);
+    top: 41%;
+    font-size: 14px;
+    color: var(--trackball);
+    // transition: 0.5s all ease; //goofy
+    transition: 0.5s color ease;
+}
+
+.control-volume {
+    display: none;
+}
+
+.sound-icon:hover .control-volume {
+    display: block;
+}
+
+@keyframes skeleton {
+    0% {
+        background-color: hsl(200, 20%, 70%);
+    }
+
+    100% {
+        background-color: hsl(200, 20%, 95%);
+    }
+}
+
+.skeleton {
+    animation: skeleton 0.6s linear infinite alternate;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #ccc;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #1877f2;
+}
+
+.scroll-none::-webkit-scrollbar {
+    display: none;
+}
+
+.song-is-play {
+    background-color: #1877f2;
+    color: white;
+}
+
+.volume-control {
+    display: none;
+}
+
+.volume-icon:hover .volume-control {
+    display: flex;
+}
+
+.modalFadeIn {
+    animation: fadeIn ease-in-out 0.6s;
+}
+
+.modalOpacity {
+    animation: opacityNe ease-in-out 0.6s;
+}
+
+@keyframes fadeIn {
+    from {
+        transform: translateY(30px);
+    }
+
+    to {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes opacityNe {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

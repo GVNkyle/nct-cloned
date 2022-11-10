@@ -1,0 +1,24 @@
+.sidebar-wrapper {
+    left: -200px;
+    transition: all linear 0.3s;
+}
+
+.sidebar-wrapper.active {
+    left: 0;
+}
+
+.content-wrapper {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.content-wrapper.pc {
+    width: calc(100% - 500px);
+    margin-right: 300px;
+}
+
+.content-wrapper.tablet {
+    width: calc(100% - 200px);
+    margin-left: 200px;
+}
