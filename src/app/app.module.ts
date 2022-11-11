@@ -12,6 +12,9 @@ import {
 import { FooterComponent } from './containers/default-component/footer/footer.component';
 import { StoreModule } from '@ngrx/store';
 import { InnerWidthDirective } from './core/directive/inner-width.directive';
+import { menuReducer } from './store/menu/menu.reducer';
+import { ClickStopPropagationDirective } from './core/directive/click-stop-propagation.directive';
+import { SidebarComponent } from './containers/default-component/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +22,7 @@ import { InnerWidthDirective } from './core/directive/inner-width.directive';
     GridLayoutComponent,
     DefaultLayoutComponent,
     FooterComponent,
+    SidebarComponent,
   ],
   imports: [
     HttpClientModule,
@@ -26,7 +30,8 @@ import { InnerWidthDirective } from './core/directive/inner-width.directive';
     AppRoutingModule,
     FormsModule,
     InnerWidthDirective,
-    StoreModule.forRoot({}, {})
+    ClickStopPropagationDirective,
+    StoreModule.forRoot({ menu: menuReducer })
   ],
   providers: [],
   bootstrap: [AppComponent]

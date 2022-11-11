@@ -1,18 +1,17 @@
 <div>
     <div class="flex w-full overflow-auto">
-        <div class="sidebar-wrapper" [ngClass]="{'active':widthDirective.type === 'Tablet'}">
-            <!-- sidebar here -->
-            <h1>Sidebar</h1>
+        <div class="sidebar-wrapper" [ngClass]="{'active': widthDirective.type === 'Tablet' || menu$ }">
+            <app-sidebar></app-sidebar>
         </div>
-        <!-- menu here -->
-        <div class="relative content-wrapper" 
-             appInnerWidth #widthDirective="windowWidth"
-             [ngClass]="{'pc':widthDirective.type === 'PC', 'tablet': widthDirective.type === 'Tablet'}">
-                <h1>Content here</h1>
-            <div
+        <ng-container *ngIf="menu$">
+            <div (click)="setMenu()" class="fixed inset-0 bg-black opacity-50 z-[9998] transition-opacity"></div>
+        </ng-container>
+        <div class="relative content-wrapper" appInnerWidth #widthDirective="windowWidth"
+            [ngClass]="{'pc':widthDirective.type === 'PC', 'tablet': widthDirective.type === 'Tablet'}">
+            <div appClickStopPropagation
                 class="px-4 py-3 shadow-md w-full flex items-center fixed top-0 z-[999] justify-between lg:hidden bg-white">
-                <i class="fa-solid fa-bars w-8 h-8 md:hidden block"></i>
-                <i class="fa-solid fa-play"></i>
+                <i class="fa-solid fa-bars w-8 h-8 md:hidden block" (click)="setMenu()"></i>
+                <i class="fa-solid fa-play w-8 h-8" (click)="setPlayer()"></i>
             </div>
             <div class="min-h-screen py-6 lg:mt-0 mt-[60px]">
                 <router-outlet></router-outlet>

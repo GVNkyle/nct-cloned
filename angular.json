@@ -47,9 +47,15 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/notiflix/dist/notiflix-3.2.5.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/notiflix/dist/notiflix-3.2.5.min.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "notiflix"
+            ]
           },
           "configurations": {
             "production": {

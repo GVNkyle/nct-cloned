@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { setMenu, setPlayer, close } from '@stores/menu/menu.actions';
 
 @Component({
   selector: 'app-default-layout',
@@ -6,9 +9,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./default-layout.component.scss']
 })
 export class DefaultLayoutComponent implements OnInit {
-  constructor() { }
+  menu$: Observable<boolean>;
+  constructor(private menu: Store<{ player: boolean, menu: boolean }>) { 
+    this.menu$ = menu.select('menu');
+  }
 
   ngOnInit(): void {
+  }
+
+  setMenu() {
+    this.menu.dispatch(setMenu());
+  }
+
+  setPlayer() {
+    this.menu.dispatch(setPlayer());
+  }
+
+  close() {
+    this.menu.dispatch(close());
   }
 
 }

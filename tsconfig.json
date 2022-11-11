@@ -48,6 +48,9 @@
       ],
       "@directives/*": [
         "src/app/core/directive/*"
+      ],
+      "@stores/*": [
+        "src/app/store/*"
       ]
     },
   },
