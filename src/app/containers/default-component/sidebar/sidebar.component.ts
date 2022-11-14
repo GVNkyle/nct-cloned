@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { setPlayer } from '@stores/menu/menu.actions';
 import { NgxNotiflixService } from '@services/ngx-notiflix.service';
 import { sidebar } from '@constants/sidebar';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,27 +12,29 @@ import { sidebar } from '@constants/sidebar';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-  player$: Observable<boolean>;
+  state: any;
   currentUser: any = null;
   isShowFormLogin: boolean = false;
   sidebarList = sidebar;
   pathname: string = '';
   constructor(
-    private player: Store<{ player: boolean, menu: boolean }>,
+    private store: Store<{ player: boolean, menu: boolean }>,
     private notiflixService: NgxNotiflixService,
+    private router: Router
   ) {
-    this.player$ = player.select('player');
-    // this.route.url.subscribe(link => this.pathname = link)
+    store.select('menu').subscribe(state => this.state = state);
+    this.pathname = this.router.url;
   }
 
   // how to handle pathname
 
   ngOnInit(): void {
+
   }
 
   setPlayer() {
-    if (this.player$)
-      this.player.dispatch(setPlayer());
+    if (this.state.player)
+      this.store.dispatch(setPlayer());
   }
 
   handleLoginForm() {
@@ -51,7 +53,12 @@ export class SidebarComponent implements OnInit {
     //handle later after add firebase
   }
 
-  handleShowChildMenu(event: any) {
-
+  handleShowChildMenu(event: any, item) {
+    if (item.child) {
+      if (event.currentTarget.classList.contains("active"))
+        event.currentTarget.classList.remove("active");
+      else
+        event.currentTarget.classList.add("active");
+    }
   }
 }

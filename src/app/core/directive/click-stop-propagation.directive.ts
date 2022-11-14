@@ -1,8 +1,7 @@
 import { Directive, HostListener } from "@angular/core";
 
 @Directive({
-  selector: '[appClickStopPropagation]',
-  standalone: true
+  selector: '[appClickStopPropagation]'
 })
 export class ClickStopPropagationDirective {
 

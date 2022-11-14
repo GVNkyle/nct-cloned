@@ -15,6 +15,7 @@ import { InnerWidthDirective } from './core/directive/inner-width.directive';
 import { menuReducer } from './store/menu/menu.reducer';
 import { ClickStopPropagationDirective } from './core/directive/click-stop-propagation.directive';
 import { SidebarComponent } from './containers/default-component/sidebar/sidebar.component';
+import { FontSizeDirective } from './core/directive/font-size.directive';
 
 @NgModule({
   declarations: [
@@ -23,14 +24,15 @@ import { SidebarComponent } from './containers/default-component/sidebar/sidebar
     DefaultLayoutComponent,
     FooterComponent,
     SidebarComponent,
+    InnerWidthDirective,
+    ClickStopPropagationDirective,
+    FontSizeDirective,
   ],
   imports: [
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    InnerWidthDirective,
-    ClickStopPropagationDirective,
     StoreModule.forRoot({ menu: menuReducer })
   ],
   providers: [],

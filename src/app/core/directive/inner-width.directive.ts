@@ -2,8 +2,7 @@ import { Directive, HostListener, OnInit } from '@angular/core';
 
 @Directive({
   selector: '[appInnerWidth]',
-  exportAs: 'windowWidth',
-  standalone: true,
+  exportAs: 'windowWidth'
 })
 export class InnerWidthDirective implements OnInit {
   width: number;

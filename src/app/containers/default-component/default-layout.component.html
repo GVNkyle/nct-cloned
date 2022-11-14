@@ -1,9 +1,11 @@
 <div>
     <div class="flex w-full overflow-auto">
-        <div class="sidebar-wrapper" [ngClass]="{'active': widthDirective.type === 'Tablet' || menu$ }">
+        <div class="sidebar-wrapper"
+            class="w-[200px] max-w-full z-[9999] h-screen pt-6 border-r border-[rgba(28,30,32,0.05)] fixed top-0 bottom-0 left-0 bg-white"
+            [ngClass]="{'active': widthDirective.type === 'Tablet' || state.menu }">
             <app-sidebar></app-sidebar>
         </div>
-        <ng-container *ngIf="menu$">
+        <ng-container *ngIf="state.menu">
             <div (click)="setMenu()" class="fixed inset-0 bg-black opacity-50 z-[9998] transition-opacity"></div>
         </ng-container>
         <div class="relative content-wrapper" appInnerWidth #widthDirective="windowWidth"
