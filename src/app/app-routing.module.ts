@@ -6,7 +6,15 @@ const routes: Routes = [
   {
     path: "",
     component: DefaultLayoutComponent,
-    children: []
+    data: {
+      title: "NCT-Cloned"
+    },
+    children: [
+      {
+        path: "",
+        loadChildren: () => import('./views/home/home.module').then(m => m.HomeModule)
+      }
+    ]
   },
   { path: '**', redirectTo: '' }
 ];

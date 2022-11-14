@@ -8,7 +8,7 @@
         </a>
         <!-- UserInfo / Login button -->
 
-        <ng-container *ngIf="currentUser !== null; else button">
+        <ng-container *ngIf="currentUser; else button">
             <!-- UserInfo -->
             <div
                 class="mt-5 py-2 text-sm bg-gray-200 w-full text-gray-600 rounded-sm flex px-4 items-center justify-between">
@@ -72,19 +72,19 @@
                     </div>
                     <div>
                         <div>
-                            <button (click)="handleSignIn()"
+                            <button (click)="handleSignIn('google')"
                                 class="flex items-center text-black bg-white p-2 rounded-md w-full mb-4">
                                 <i class="fa-brands fa-google w-6 h-6 mr-5" fontSize="24"></i> Đăng nhập với Google
                             </button>
                         </div>
                         <div>
-                            <button (click)="handleSignIn()"
+                            <button (click)="handleSignIn('github')"
                                 class="flex items-center text-white bg-black p-2 rounded-md w-full mb-4">
                                 <i class="fa-brands fa-github w-6 h-6 mr-5" fontSize="24"></i> Đăng nhập với Github
                             </button>
                         </div>
                         <div>
-                            <button (click)="handleSignIn()"
+                            <button (click)="handleSignIn('facebook')"
                                 class="flex items-center text-white bg-blue-500 p-2 rounded-md w-full">
                                 <i class="fa-brands fa-facebook w-6 h-6 mr-5" fontSize="24"></i> Đăng nhập với Facebook
                             </button>

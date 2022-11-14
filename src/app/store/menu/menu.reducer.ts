@@ -1,5 +1,4 @@
 import { createReducer, on } from '@ngrx/store';
-import { of } from 'rxjs';
 import { setMenu, setPlayer, close } from './menu.actions';
 
 export const initialState = {

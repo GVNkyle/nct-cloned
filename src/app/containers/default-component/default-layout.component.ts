@@ -8,9 +8,11 @@ import { setMenu, setPlayer, close } from '@stores/menu/menu.actions';
   styleUrls: ['./default-layout.component.scss']
 })
 export class DefaultLayoutComponent implements OnInit {
-  state: any;
-  constructor(private store: Store<{ player: boolean, menu: boolean }>) { 
-    store.select('menu').subscribe(state => this.state = state);
+  menuState: any;
+  constructor(
+    private store: Store<{ menu, auth }>
+  ) {
+    store.select('menu').subscribe(state => this.menuState = state);
   }
 
   ngOnInit(): void {
