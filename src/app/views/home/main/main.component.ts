@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeData } from '@models/home';
 import { HomeService } from '@services/home.service';
+import { NgxNotiflixService } from '@services/ngx-notiflix.service';
 import { catchError, firstValueFrom, of, tap } from 'rxjs';
 
 @Component({
@@ -10,19 +11,22 @@ import { catchError, firstValueFrom, of, tap } from 'rxjs';
 })
 export class MainComponent implements OnInit {
   data: HomeData;
-  constructor(private homeService: HomeService) { }
+  constructor(private homeService: HomeService, private notiflixService: NgxNotiflixService) { }
 
   ngOnInit(): void {
     this.getHomeData();
   }
 
-  async getHomeData(){
+  async getHomeData() {
+    this.notiflixService.showBlock(document.querySelectorAll('#container'));
     await firstValueFrom(this.homeService.getHome().pipe(
       tap(res => {
         this.data = res;
+        this.notiflixService.hideBlock(document.querySelectorAll('#container'));
       }),
       catchError(() => {
-        return of(null)
+        this.notiflixService.hideBlock(document.querySelectorAll('#container'));
+        return of(null);
       })
     ));
   }

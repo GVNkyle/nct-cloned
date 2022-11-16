@@ -11,6 +11,7 @@ import { NgxNotiflixService } from '@services/ngx-notiflix.service';
 import { setPlayer } from '@stores/menu/menu.actions';
 import { sidebar } from '@constants/sidebar';
 import { AuthService } from '@services/auth.service';
+import { setUser } from '@stores/auth/auth.actions';
 
 @Component({
   selector: 'app-sidebar',
@@ -19,17 +20,19 @@ import { AuthService } from '@services/auth.service';
 })
 export class SidebarComponent implements OnInit {
   menuState: any;
-  currentUser = JSON.parse(localStorage.getItem('NCT_User')!);
+  currentUser;
   isShowFormLogin: boolean = false;
   sidebarList = sidebar;
   pathname: string = '';
+  temp;
   constructor(
-    private store: Store<{ menu }>,
+    private store: Store<{ menu, auth }>,
     private notiflixService: NgxNotiflixService,
     private router: Router,
     private authService: AuthService
   ) {
     store.select('menu').subscribe(state => this.menuState = state);
+    store.select('auth').subscribe(state => this.currentUser = state.currentUser);
     this.pathname = this.router.url;
   }
 
@@ -70,14 +73,13 @@ export class SidebarComponent implements OnInit {
         throw new Error('Error: no login provider');
     };
     await this.authService.AuthLogin(_provider);
-    await this.getCurrentUser();
     await this.handleClose();
   }
 
   async signOut() {
     this.notiflixService.confirm("Logout", "Are you sure you want to Logout?", async () => {
       await this.authService.signOut();
-      await this.getCurrentUser();
+      this.store.dispatch(setUser({ payload: null }))
     });
   }
 
@@ -90,7 +92,4 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-  private getCurrentUser() {
-    this.currentUser = JSON.parse(localStorage.getItem('NCT_User')!);   
-  }
 }

@@ -2,13 +2,16 @@
     <div class="flex w-full overflow-auto">
         <div class="w-[200px] max-w-full z-[9999] h-screen pt-6 border-r border-[rgba(28,30,32,0.05)] fixed top-0 bottom-0 left-0 bg-white sidebar-wrapper"
             [ngClass]="{'active': widthDirective.isTablet || menuState.menu }">
+            <!-- sidebar -->
             <app-sidebar></app-sidebar>
         </div>
         <ng-container *ngIf="menuState.menu">
+            <!-- menu-item -->
             <div (click)="setMenu()" class="fixed inset-0 bg-black opacity-50 z-[9998] transition-opacity"></div>
         </ng-container>
         <div class="relative content-wrapper" appInnerWidth #widthDirective="windowWidth"
-            [ngClass]="{'pc':widthDirective.isPC, 'tablet': widthDirective.isTablet}">
+            [ngClass]="{'pc':widthDirective.isPC, 'tablet': !widthDirective.isPC && widthDirective.isTablet}">
+            <!-- icon menu in tablet and mobile resolution -->
             <div appClickStopPropagation
                 class="px-4 py-3 shadow-md w-full flex items-center fixed top-0 z-[999] justify-between lg:hidden bg-white">
                 <i class="fa-solid fa-bars w-8 h-8 md:hidden block" (click)="setMenu()"></i>
@@ -16,6 +19,18 @@
             </div>
             <div class="min-h-screen py-6 lg:mt-0 mt-[60px]">
                 <router-outlet></router-outlet>
+                <div class="scroll-none overflow-y-scroll md:w-[300px] w-full max-w-full border-l border-r [rgba(28,30,32,0.05)] px-4 h-screen pt-4 fixed top-0 bottom-0 z-[9998] bg-white player-wrapper"
+                    [ngClass]="{'active': widthDirective.isPC || player}">
+                    <!-- player -->
+                    <div class="flex-col justify-between h-full flex">
+                        <!-- Player Thumbnail -->
+
+                        <!-- Controller -->
+
+                        <!-- audio -->
+                        <audio></audio>
+                    </div>
+                </div>
             </div>
             <app-footer></app-footer>
         </div>

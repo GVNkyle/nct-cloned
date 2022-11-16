@@ -21,6 +21,9 @@ import { ClickStopPropagationDirective } from './core/directive/click-stop-propa
 import { SidebarComponent } from './containers/default-component/sidebar/sidebar.component';
 import { FontSizeDirective } from './core/directive/font-size.directive';
 import { environment } from '@env/environment';
+import { authReducer } from '@stores/auth/auth.reducer';
+import { musicReducer } from '@stores/music/music.reducer';
+import { playerReducer } from '@stores/player/player.reducer';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,7 @@ import { environment } from '@env/environment';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    StoreModule.forRoot({ menu: menuReducer }),
+    StoreModule.forRoot({ menu: menuReducer, auth: authReducer, music: musicReducer, player: playerReducer }),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     InnerWidthDirective,

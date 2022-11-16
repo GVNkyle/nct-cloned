@@ -6,3 +6,8 @@ export interface Song {
     artists: Artist[];
     key: string;
 }
+
+export interface songStoreItem extends Song {
+    uid: string;
+    id: string;
+}

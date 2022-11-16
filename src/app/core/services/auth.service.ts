@@ -6,7 +6,6 @@ import {
 } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { User } from '@models/user';
-import { firstValueFrom } from 'rxjs';
 import { NgxNotiflixService } from './ngx-notiflix.service';
 
 @Injectable({
@@ -16,21 +15,12 @@ export class AuthService {
   user: User;
   constructor(
     public afs: AngularFirestore,
-    public fAuth: AngularFireAuth,
+    public afAuth: AngularFireAuth,
     public router: Router,
     public ngZone: NgZone,
     private notiflixService: NgxNotiflixService
   ) {
-    this.fAuth.authState.subscribe((user) => {
-      if (user) {
-        this.user = user;
-        localStorage.setItem('NCT_User', JSON.stringify(this.user));
-        JSON.parse(localStorage.getItem('NCT_User')!)
-      } else {
-        localStorage.setItem('NCT_User', null);
-        JSON.parse(localStorage.getItem('NCT_User')!);
-      }
-    })
+
   }
 
   get isLoggedIn(): boolean {
@@ -42,7 +32,7 @@ export class AuthService {
   }
 
   async signOut() {
-    await this.fAuth.signOut();
+    await this.afAuth.signOut();
     localStorage.removeItem('NCT_User');
   }
 
@@ -65,7 +55,7 @@ export class AuthService {
 
   async AuthLogin(provider: any) {
     try {
-      const result = await this.fAuth.signInWithPopup(provider);
+      const result = await this.afAuth.signInWithPopup(provider);
       this.setUserData(result.user);
     } catch (err) {
       this.notiflixService.error(err.message);

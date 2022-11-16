@@ -20,7 +20,7 @@ export class BannerComponent implements OnInit {
     spaceBetween: 20,
     navigation: true,
     autoplay: true,
-    loop: true
+    loop: true,
   };
   constructor() { }
 
