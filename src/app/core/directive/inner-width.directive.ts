@@ -2,11 +2,14 @@ import { Directive, HostListener, OnInit } from '@angular/core';
 
 @Directive({
   selector: '[appInnerWidth]',
-  exportAs: 'windowWidth'
+  exportAs: 'windowWidth',
+  standalone: true
 })
 export class InnerWidthDirective implements OnInit {
   width: number;
-  type: string
+  isPC: boolean;
+  isTablet: boolean;
+  isMobile: boolean;
   constructor() { }
 
   ngOnInit() {
@@ -16,14 +19,9 @@ export class InnerWidthDirective implements OnInit {
   @HostListener('window:resize', ['$event'])
   getScreenSize() {
     this.width = window.innerWidth;
-    if (this.width > 1024) {
-      this.type = 'PC'
-    } else if (this.width > 768) {
-      this.type = 'Tablet'
-    } else if (this.width > 640) {
-      this.type = 'Mobile'
-    }
-
+    this.isPC = this.width > 1024;
+    this.isTablet = this.width > 768;
+    this.isMobile = this.width > 640;
   }
 
 }

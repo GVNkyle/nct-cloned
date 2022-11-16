@@ -1,0 +1,7 @@
+<div (click)="handleSong()">
+    <a [routerLink]="[link]" class="block w-full rounded-md" [style.aspectRatio]="ratio">
+        <img src="{{item.imageUrl || item.thumbnail || item.thumbURL || imgNotFound}}" class="rounded-md"
+            loading="lazy" />
+        <p class="line-clamp-1 font-semibold text-sm">{{item?.title}}</p>
+    </a>
+</div>

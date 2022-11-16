@@ -48,7 +48,10 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/notiflix/dist/notiflix-3.2.5.min.css"
+              "node_modules/notiflix/dist/notiflix-3.2.5.min.css",
+              "node_modules/swiper/swiper.min.css",
+              "node_modules/swiper/modules/navigation/navigation.min.css",
+              "node_modules/swiper/modules/pagination/pagination.min.css"
             ],
             "scripts": [
               "node_modules/notiflix/dist/notiflix-3.2.5.min.js"

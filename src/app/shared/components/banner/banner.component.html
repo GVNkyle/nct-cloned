@@ -1,0 +1,10 @@
+<swiper [config]="config">
+    <ng-template swiperSlide *ngFor="let item of banners">
+        <div class="w-full aspect-auto rounded-md overflow-hidden">
+            <img src="{{item.coverImageURL ||
+                item.imageUrl ||
+                item.thumbnail ||
+                item.thumbURL}}" alt="{{item.title}}" loading="lazy">
+        </div>
+    </ng-template>
+</swiper>

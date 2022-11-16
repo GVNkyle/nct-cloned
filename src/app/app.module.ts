@@ -28,19 +28,19 @@ import { environment } from '@env/environment';
     GridLayoutComponent,
     DefaultLayoutComponent,
     FooterComponent,
-    SidebarComponent,
-    InnerWidthDirective,
-    ClickStopPropagationDirective,
-    FontSizeDirective,
+    SidebarComponent
   ],
   imports: [
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    StoreModule.forRoot({ menu: menuReducer}),
+    StoreModule.forRoot({ menu: menuReducer }),
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    InnerWidthDirective,
+    ClickStopPropagationDirective,
+    FontSizeDirective,
   ],
   providers: [],
   bootstrap: [AppComponent]

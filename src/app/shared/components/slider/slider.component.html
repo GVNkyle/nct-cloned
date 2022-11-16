@@ -1,0 +1,6 @@
+<swiper [config]="config" appInnerWidth #widthDirective="windowWidth"
+    [slidesPerView]="widthDirective.isPC ? 4 : widthDirective.isTablet ? 3 : 2">
+    <ng-template swiperSlide *ngFor="let item of banners">
+        <app-item [ratio]="ratio" [item]="item" [type]="type"></app-item>
+    </ng-template>
+</swiper>

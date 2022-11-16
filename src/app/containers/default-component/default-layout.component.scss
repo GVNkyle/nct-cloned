@@ -4,7 +4,7 @@
 }
 
 .sidebar-wrapper.active {
-    left: 0;
+    left: 0px;
 }
 
 .content-wrapper {
@@ -16,6 +16,7 @@
 .content-wrapper.pc {
     width: calc(100% - 500px);
     margin-right: 300px;
+    margin-left: 200px;
 }
 
 .content-wrapper.tablet {

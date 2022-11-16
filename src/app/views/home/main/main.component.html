@@ -1,1 +1,48 @@
-<p>main works!</p>
+<div class="px-4 w-full">
+    <div class="mb-10">
+        <!-- banner -->
+        <app-banner [banners]="data?.showcase"></app-banner>
+    </div>
+    <div>
+        <ng-container *ngFor="let item of data?.topicEvent">
+            <div class="mb-5">
+                <h1 class="mb-5 font-semibold text-xl">
+                    {{item.groupName.split("_")[0]}}
+                </h1>
+                <!-- Slider -->
+                <app-slider [banners]="item.listPlaylist" [spaceBetween]="20"></app-slider>
+            </div>
+        </ng-container>
+
+        <div class="mb-5">
+            <h1 class="mb-5 font-semibold text-xl">Mới Phát Hành</h1>
+            <!-- Wrap Song -->
+            <app-wrap-song [songs]="data?.newRelease?.song"></app-wrap-song>
+        </div>
+
+        <div class="mb-5">
+            <h1 class="mb-5 font-semibold text-xl">Top 100</h1>
+            <!-- Slider -->
+            <app-slider [banners]="data?.top100" [spaceBetween]="20"></app-slider>
+        </div>
+
+        <div class="mb-5">
+            <h1 class="mb-5 font-semibold text-xl">Chủ Đề Hot</h1>
+            <!-- Slider -->
+            <app-slider [banners]="data?.topic" [spaceBetween]="20"></app-slider>
+        </div>
+
+        <div class="mb-5">
+            <h1 class="mb-5 font-semibold text-xl">Video Hot</h1>
+            <!-- Slider -->
+            <app-slider [banners]="data?.video" [spaceBetween]="20"></app-slider>
+        </div>
+
+        <div class="mb-5">
+            <h1 class="mb-5 font-semibold text-xl">Bài Hát</h1>
+            <!-- Wrap Song -->
+            <app-wrap-song [songs]="data?.song"></app-wrap-song>
+        </div>
+    </div>
+
+</div>
