@@ -10,28 +10,29 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {
+const APP_CONTAINERS = [
   GridLayoutComponent,
-  DefaultLayoutComponent
-} from './containers';
-import { FooterComponent } from './containers/default-component/footer/footer.component';
-import { InnerWidthDirective } from './core/directive/inner-width.directive';
-import { menuReducer } from './store/menu/menu.reducer';
-import { ClickStopPropagationDirective } from './core/directive/click-stop-propagation.directive';
-import { SidebarComponent } from './containers/default-component/sidebar/sidebar.component';
-import { FontSizeDirective } from './core/directive/font-size.directive';
+  DefaultLayoutComponent,
+  FooterComponent,
+  SidebarComponent,
+  PlayerComponent
+]
+import { InnerWidthDirective } from '@directives/inner-width.directive';
+import { ClickStopPropagationDirective } from '@directives/click-stop-propagation.directive';
+import { FontSizeDirective } from '@directives/font-size.directive';
 import { environment } from '@env/environment';
+import { menuReducer } from '@stores/menu/menu.reducer';
 import { authReducer } from '@stores/auth/auth.reducer';
 import { musicReducer } from '@stores/music/music.reducer';
 import { playerReducer } from '@stores/player/player.reducer';
+import { GridLayoutComponent, DefaultLayoutComponent, FooterComponent, SidebarComponent, PlayerComponent } from './containers';
+import { FormatTimePipe } from './core/pipes/format-time.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    GridLayoutComponent,
-    DefaultLayoutComponent,
-    FooterComponent,
-    SidebarComponent
+    ...APP_CONTAINERS,
+    FormatTimePipe
   ],
   imports: [
     HttpClientModule,
@@ -43,7 +44,7 @@ import { playerReducer } from '@stores/player/player.reducer';
     AngularFireAuthModule,
     InnerWidthDirective,
     ClickStopPropagationDirective,
-    FontSizeDirective,
+    FontSizeDirective
   ],
   providers: [],
   bootstrap: [AppComponent]

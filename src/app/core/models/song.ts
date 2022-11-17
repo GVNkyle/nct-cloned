@@ -5,6 +5,7 @@ export interface Song {
     thumbnail: string;
     artists: Artist[];
     key: string;
+    artistName?: string;
 }
 
 export interface songStoreItem extends Song {

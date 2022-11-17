@@ -20,6 +20,7 @@ export class NgxNotiflixService {
       pauseOnHover: true,
       clickToClose: true,
       fontSize: '16px',
+      position: 'center-top',
       success: { notiflixIconColor: '#fff' },
       failure: { notiflixIconColor: '#fff' },
       warning: { notiflixIconColor: '#000', textColor: '#000' },

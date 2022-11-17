@@ -40,6 +40,9 @@
       "@guards/*": [
         "src/app/core/guards/*"
       ],
+      "@pipes/*": [
+        "src/app/core/pipes/*"
+      ],
       "@resolvers/*": [
         "src/app/core/resolvers/*"
       ],

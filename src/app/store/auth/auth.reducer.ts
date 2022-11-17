@@ -7,5 +7,5 @@ export const initialState = {
 
 export const authReducer = createReducer(
     initialState,
-    on(setUser, (state, { payload }) => ({ currentUser: payload }))
+    on(setUser, (state, { payload }) => ({ ...state, currentUser: payload }))
 )

@@ -23,12 +23,3 @@
     width: calc(100% - 200px);
     margin-left: 200px;
 }
-
-.player-wrapper {
-    right: -100%;
-    transition: "all linear 0.3s"
-}
-
-.player-wrapper.active {
-    right: 0px;
-}

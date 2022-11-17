@@ -1,0 +1,140 @@
+<div appInnerWidth #widthDirective="windowWidth"
+    class="scroll-none overflow-y-scroll md:w-[300px] w-full max-w-full border-l border-r [rgba(28,30,32,0.05)] px-4 h-screen pt-4 fixed top-0 bottom-0 z-[9998] bg-white player-wrapper"
+    [ngClass]="{'active': widthDirective.isPC || player}">
+    <!-- player -->
+    <div appClickStopPropagation class="flex-col justify-between h-full flex">
+        <!-- Player Thumbnail -->
+        <div class="bg-[rgba(28,30,32,0.02)] rounded-md mb-5 relative" [ngClass]="{'h-full': isShowListSong}">
+            <div class="w-full flex justify-center md:hidden">
+                <button type="button" (click)="setPlayer()"
+                    class="w-5 h-5 rounded-full bg-red-500 flex items-center justify-center my-1">
+                    <i class="fa-solid fa-xmark text-white"></i>
+                </button>
+            </div>
+            <ng-container *ngIf="isShowListSong; else elseBlock">
+                <!-- List Song -->
+                <div class="absolute top-0 w-full bg-white h-full overflow-auto scroll-none">
+                    <h1 class="font-semibold mb-2">Danh sách phát</h1>
+                    <!-- SongItem -->
+                    <ng-container *ngFor="let item of songIds; let index = index">
+                        <div class="my-2 p-2 flex cursor-pointer" [ngClass]="{'song-is-play': currentIndex === index }"
+                            (click)="setCurrentIndex(index)">
+                            <div class="w-10 h-10 rounded-md overflow-hidden">
+                                <img src="{{item.thumbnail || imgNotFound}}" alt="{{item.title}}">
+                            </div>
+                            <div class="ml-2 flex-1">
+                                <p class="line-clamp-1 text-sm mb-1">{{item.title}}</p>
+                                <p class="line-clamp-1 text-xs">{{item.artistName}}</p>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+            <ng-template #elseBlock>
+                <div>
+                    <!--Thumbnail-->
+                    <div class="pr-4 pl-4 pb-4">
+                        <div class="w-full aspect-[1/1]">
+                            <img src="{{data?.song?.thumbnail || imgNotFound}}" alt="">
+                        </div>
+                        <div class="mt-5">
+                            <h1 class="font-semibold line-clamp-1">{{data?.song?.title}}</h1>
+                            <p class="text-sm text-gray-400 font-normal line-clamp-1">
+                                {{artist}}
+                            </p>
+                            <ng-container *ngIf="data?.song?.title && artist">
+                                <a [routerLink]="['/song/' + data?.song?.key]" class="text-blue-500 text-sm mt-2">
+                                    Xem lời bài hát
+                                </a>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+
+        <!-- Controller -->
+        <div class="pb-5">
+            <div class="flex items-center justify-between relative">
+                <!-- volume controller -->
+                <div appClickStopPropagation (click)="setVolume()" class="cursor-pointer volume-icon">
+                    <ng-container *ngIf="volume === 0; else volumeUpIcon">
+                        <i class="fa-solid fa-volume-xmark lg:w-5 lg:h-5 w-6 h-6 text-gray-500"></i>
+                    </ng-container>
+                    <ng-template #volumeUpIcon>
+                        <i class="fa-solid fa-volume-high lg:w-5 lg:h-5 w-6 h-6 text-gray-500"></i>
+                    </ng-template>
+                    <div appClickStopPropagation
+                        class="volume-control absolute left-[-65px] top-[-75px] bg-gray-200 flex items-center justify-center p-2 rounded-md rotate-[-90deg]">
+                        <input type="range" name="slider" id="slider" (ngModelChange)="changeVolume()"
+                            [(ngModel)]="volume" />
+                    </div>
+                </div>
+                <!-- Song Lists Toggle -->
+                <button (click)="toggleListSong()"
+                    class="bg-[rgba(28,30,32,0.02)] px-6 py-2 rounded-full text-xs text-gray-400">
+                    {{isShowListSong ? "Tắt Danh Sách Phát" : "Mở Danh Sách Phát"}}
+                </button>
+                <!-- Add Favorite button -->
+                <button (click)="handleAddSongFavorite()">
+                    <div id="loadingFavoriteIcon">
+                        <ng-container *ngIf="isKeyMatching ;else heartIcon">
+                            <i class="fa-solid fa-heart lg:w-5 lg:h-5 w-6 h-6 cursor-pointer"></i>
+                        </ng-container>
+                        <ng-template #heartIcon>
+                            <i class="fa-regular fa-heart lg:w-5 lg:h-5 w-6 h-6 cursor-pointer"></i>
+                        </ng-template>
+                    </div>
+                </button>
+            </div>
+            <div class="mt-8">
+                <!-- Display Time -->
+                <div class="flex items-center justify-between text-gray-400 text-xs font-normal">
+                    <p [style.userSelect]="'none'">{{currentTime | formatTime}}</p>
+                    <div class="flex-1 py-2 mx-[10px] cursor-pointer" #progressRef (click)="handleSeekTime($event)">
+                        <div class="w-full bg-gray-300 h-[3px] relative">
+                            <p [style.width]="((currentTime * 100) / audioRef?.duration || 0 ) + '%'"
+                                class="absolute top-0 bottom-0 bg-blue-500"></p>
+                        </div>
+                    </div>
+                    <p [style.userSelect]="'none'">{{duration | formatTime}}</p>
+                </div>
+                <!-- Next / Prev / Play / Pause -->
+                <div class="flex items-center justify-between mt-5 ml-2 text-[rgba(28,30,32,0.5)]">
+                    <div class="flex items-center cursor-pointer">
+                        <i (click)="handlePrevSong()" class="fa-solid fa-backward-step w-8 h-8" fontSize="24"></i>
+                    </div>
+                    <div class="flex items-center cursor-pointer" (click)="handlePlayPause()">
+                        <ng-container *ngIf="isPlaying; else elseButton">
+                            <i class="fa-solid fa-pause w-12 h-14" fontSize="40"></i>
+                        </ng-container>
+                        <ng-template #elseButton>
+                            <i class="fa-solid fa-play w-12 h-14" fontSize="40"></i>
+                        </ng-template>
+                    </div>
+                    <div class="flex items-center cursor-pointer">
+                        <i (click)="handleNextSong()" class="fa-solid fa-forward-step w-8 h-8" fontSize="24"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- handle player open/hide -->
+
+        <!-- audio -->
+        <audio #audioRef (play)="setPlaying(true)" (pause)="setPlaying(false)" (ended)="handleAudioEnded()"
+            (timeupdate)="handleAudioUpdate()"></audio>
+
+        <!-- Play Review -->
+        <ng-container *ngIf="data">
+            <div (click)="onClickSetPlayer()"
+                class="fixed right-0 bottom-0 bg-white p-2 rounded-md mb-14 mr-5 shadow-md lg:hidden z-[99999] cursor-pointer"
+                [ngClass]="{'hidden': player, 'block': !player}">
+                <div class="flex items-center font-semibold text-sm">
+                    <i class="fa-solid fa-music w-5 text-pink-500"></i>
+                    <p class="line-clamp-1">{{data?.song?.title}}</p>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

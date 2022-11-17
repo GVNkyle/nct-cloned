@@ -12,27 +12,30 @@ import { setPlayer } from '@stores/menu/menu.actions';
 import { sidebar } from '@constants/sidebar';
 import { AuthService } from '@services/auth.service';
 import { setUser } from '@stores/auth/auth.actions';
+import { DestroyService } from '@services/destroy.service';
+import { takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+  styleUrls: ['./sidebar.component.scss'],
+  providers: [DestroyService]
 })
 export class SidebarComponent implements OnInit {
-  menuState: any;
-  currentUser;
+  player: boolean;
+  currentUser: any;
   isShowFormLogin: boolean = false;
   sidebarList = sidebar;
   pathname: string = '';
-  temp;
   constructor(
     private store: Store<{ menu, auth }>,
     private notiflixService: NgxNotiflixService,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private destroyService: DestroyService
   ) {
-    store.select('menu').subscribe(state => this.menuState = state);
-    store.select('auth').subscribe(state => this.currentUser = state.currentUser);
+    store.select('menu').pipe(takeUntil(this.destroyService.destroys$)).subscribe(state => this.player = state.player);
+    store.select('auth').pipe(takeUntil(this.destroyService.destroys$)).subscribe(state => this.currentUser = state.currentUser);
     this.pathname = this.router.url;
   }
 
@@ -45,7 +48,7 @@ export class SidebarComponent implements OnInit {
   }
 
   setPlayer() {
-    if (this.menuState.player)
+    if (this.player)
       this.store.dispatch(setPlayer());
   }
 
@@ -78,8 +81,7 @@ export class SidebarComponent implements OnInit {
 
   async signOut() {
     this.notiflixService.confirm("Logout", "Are you sure you want to Logout?", async () => {
-      await this.authService.signOut();
-      this.store.dispatch(setUser({ payload: null }))
+      this.authService.signOut().then(() => this.store.dispatch(setUser({ payload: null })));
     });
   }
 

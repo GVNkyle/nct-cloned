@@ -20,11 +20,11 @@ export class AppComponent implements OnInit {
     private notiflixService: NgxNotiflixService) { }
 
   ngOnInit(): void {
-    // this.notiflixService.init({
-    //   loadingSvgUrl: 'assets/img/loader.svg',
-    //   loadingType: 'custom',
-    //   okButton: 'Okie',
-    // });
+    this.notiflixService.init({
+      // loadingSvgUrl: 'assets/img/loader.svg',
+      // loadingType: 'custom',
+      okButton: 'Okie',
+    });
 
     this.router.events.subscribe((evt) => {
       this.navigationInterceptor(evt);

@@ -1,13 +1,15 @@
 import { createReducer, on } from '@ngrx/store';
-import { setSongId, setCurrentIndex } from './player.actions';
+import { setSongId, setCurrentIndex, setSongAndIndex } from './player.actions';
+import { LIST_SONG, CURRENT_INDEX } from '@constants/local-storage';
 
 export const initialState = {
-    songIds: JSON.parse(localStorage.getItem("NCT_List_Song") as any) || [],
-    currentIndex: JSON.parse(localStorage.getItem("NCT_Current_Index") as any) || 0,
+    songIds: JSON.parse(localStorage.getItem(LIST_SONG) as any) || [],
+    currentIndex: JSON.parse(localStorage.getItem(CURRENT_INDEX) as any) || 0,
 }
 
 export const playerReducer = createReducer(
     initialState,
-    on(setSongId, (state, { songIds }) => ({ ...state, songIds: songIds })),
-    on(setCurrentIndex, (state, { currentIndex }) => ({ ...state, currentIndex: currentIndex })),
+    on(setSongId, (state, { songIds }) => ({ ...state, songIds })),
+    on(setCurrentIndex, (state, { currentIndex }) => ({ ...state, currentIndex })),
+    on(setSongAndIndex, (state, { currentIndex, songIds }) => ({ ...state, currentIndex, songIds }))
 );

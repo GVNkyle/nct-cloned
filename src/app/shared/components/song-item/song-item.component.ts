@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Song } from '@models/song';
-import { imgNotFound } from '@constants/constants';
+import { imgNotFound } from '@constants/utils';
 
 @Component({
   selector: 'app-song-item',

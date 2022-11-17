@@ -1,0 +1,8 @@
+.player-wrapper {
+    right: -100%;
+    transition: all linear 0.3s;
+}
+
+.player-wrapper.active {
+    right: 0px;
+}

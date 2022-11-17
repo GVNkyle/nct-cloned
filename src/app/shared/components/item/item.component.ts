@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { imgNotFound } from '@constants/constants';
+import { Store } from '@ngrx/store';
+import { imgNotFound } from '@constants/utils';
+import { setSongId } from '@stores/player/player.actions';
 
 @Component({
   selector: 'app-item',
@@ -16,7 +18,7 @@ export class ItemComponent implements OnInit {
   @Input() ratio: string = "1/1";
   link: string = '';
   imgNotFound = imgNotFound;
-  constructor() { }
+  constructor(private store: Store<{ player }>) { }
 
   ngOnInit(): void {
     this.link = this.item.type ?
@@ -26,8 +28,12 @@ export class ItemComponent implements OnInit {
         "#"
   }
 
-  handleSong() {
-    // do something
+  handleSong(key: any) {
+    if (this.type !== "songs") {
+      return;
+    }
+
+    this.store.dispatch(setSongId({ songIds: key }));
   }
 
 }

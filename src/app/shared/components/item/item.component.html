@@ -1,4 +1,4 @@
-<div (click)="handleSong()">
+<div (click)="handleSong(item.key)">
     <a [routerLink]="[link]" class="block w-full rounded-md" [style.aspectRatio]="ratio">
         <img src="{{item.imageUrl || item.thumbnail || item.thumbURL || imgNotFound}}" class="rounded-md"
             loading="lazy" />
