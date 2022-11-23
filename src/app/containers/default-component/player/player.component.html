@@ -77,21 +77,20 @@
                 </button>
                 <!-- Add Favorite button -->
                 <button (click)="handleAddSongFavorite()">
-                    <div id="loadingFavoriteIcon">
-                        <ng-container *ngIf="isKeyMatching ;else heartIcon">
-                            <i class="fa-solid fa-heart lg:w-5 lg:h-5 w-6 h-6 cursor-pointer"></i>
-                        </ng-container>
-                        <ng-template #heartIcon>
-                            <i class="fa-regular fa-heart lg:w-5 lg:h-5 w-6 h-6 cursor-pointer"></i>
-                        </ng-template>
-                    </div>
+                    <ng-container *ngIf="isFavorite ;else heartIcon">
+                        <i class="fa-solid fa-heart text-red-500 lg:w-5 lg:h-5 w-6 h-6 cursor-pointer"></i>
+                    </ng-container>
+                    <ng-template #heartIcon>
+                        <i class="fa-regular fa-heart lg:w-5 lg:h-5 w-6 h-6 cursor-pointer"></i>
+                    </ng-template>
                 </button>
             </div>
             <div class="mt-8">
                 <!-- Display Time -->
                 <div class="flex items-center justify-between text-gray-400 text-xs font-normal">
                     <p [style.userSelect]="'none'">{{currentTime | formatTime}}</p>
-                    <div class="flex-1 py-2 mx-[10px] cursor-pointer" #progressRef (click)="handleSeekTime($event)">
+                    <div class="flex-1 py-2 mx-[10px] cursor-pointer" #progressRef (click)="handleSeekTime($event)"
+                        (pointerdown)="registerEvent($event)">
                         <div class="w-full bg-gray-300 h-[3px] relative">
                             <p [style.width]="((currentTime * 100) / audioRef?.duration || 0 ) + '%'"
                                 class="absolute top-0 bottom-0 bg-blue-500"></p>

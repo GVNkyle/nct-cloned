@@ -24,9 +24,12 @@ export class DefaultLayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.afAuth.onAuthStateChanged((user) => {
+    this.afAuth.user.subscribe((user) => {
       if (user) {
-        this.store.dispatch(setUser({ payload: user }));
+        let _user = JSON.parse(JSON.stringify(user))
+        this.store.dispatch(setUser({ payload: _user }));
+      } else {
+        this.store.dispatch(setUser({ payload: null }));
       }
     })
   }

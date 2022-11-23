@@ -10,5 +10,4 @@ export interface Song {
 
 export interface songStoreItem extends Song {
     uid: string;
-    id: string;
 }

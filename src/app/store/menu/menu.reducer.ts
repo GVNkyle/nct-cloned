@@ -1,7 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
 import { setMenu, setPlayer, close } from './menu.actions';
+export interface MenuState  {
+    player: boolean,
+    menu: boolean,
+}
 
-export const initialState = {
+export const initialState: MenuState = {
     player: false,
     menu: false,
 };

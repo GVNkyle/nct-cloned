@@ -11,7 +11,6 @@ import { NgxNotiflixService } from '@services/ngx-notiflix.service';
 import { setPlayer } from '@stores/menu/menu.actions';
 import { sidebar } from '@constants/sidebar';
 import { AuthService } from '@services/auth.service';
-import { setUser } from '@stores/auth/auth.actions';
 import { DestroyService } from '@services/destroy.service';
 import { takeUntil } from 'rxjs';
 
@@ -81,7 +80,7 @@ export class SidebarComponent implements OnInit {
 
   async signOut() {
     this.notiflixService.confirm("Logout", "Are you sure you want to Logout?", async () => {
-      this.authService.signOut().then(() => this.store.dispatch(setUser({ payload: null })));
+      await this.authService.signOut();
     });
   }
 

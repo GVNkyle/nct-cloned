@@ -20,6 +20,7 @@
     "@angular/platform-browser-dynamic": "^14.0.0",
     "@angular/router": "^14.0.0",
     "@ngrx/store": "^14.3.2",
+    "@ngrx/store-devtools": "^14.3.2",
     "firebase": "^9.14.0",
     "notiflix": "^3.2.5",
     "rxjs": "~7.5.0",

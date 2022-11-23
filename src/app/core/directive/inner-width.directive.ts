@@ -1,16 +1,19 @@
-import { Directive, HostListener, OnInit } from '@angular/core';
+import { Directive, HostListener, OnDestroy, OnInit } from '@angular/core';
 
 @Directive({
   selector: '[appInnerWidth]',
   exportAs: 'windowWidth',
   standalone: true
 })
-export class InnerWidthDirective implements OnInit {
+export class InnerWidthDirective implements OnInit, OnDestroy {
   width: number;
   isPC: boolean;
   isTablet: boolean;
   isMobile: boolean;
   constructor() { }
+  ngOnDestroy(): void {
+    document.removeEventListener('window:resize', this.getScreenSize, false);
+  }
 
   ngOnInit() {
     this.getScreenSize();

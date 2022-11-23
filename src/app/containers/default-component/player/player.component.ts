@@ -1,12 +1,14 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { imgNotFound, addMusicFromLocal } from '@constants/utils';
 import { Song, songStoreItem } from '@models/song';
 import { Store } from '@ngrx/store';
-import { takeUntil } from 'rxjs';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { takeUntil, tap } from 'rxjs';
 import { DestroyService } from '@services/destroy.service';
 import { SongService } from '@services/song.service';
 import { setCurrentIndex } from '@stores/player/player.actions';
 import { setPlayer } from '@stores/menu/menu.actions';
+import { addSong, deleteSong, setSongs } from '@stores/music/music.actions';
 import { NgxNotiflixService } from '@services/ngx-notiflix.service';
 import { CURRENT_INDEX, LIST_SONG, VOLUME } from '@constants/local-storage';
 
@@ -16,7 +18,7 @@ import { CURRENT_INDEX, LIST_SONG, VOLUME } from '@constants/local-storage';
   styleUrls: ['./player.component.scss'],
   providers: [DestroyService]
 })
-export class PlayerComponent implements OnInit {
+export class PlayerComponent implements OnInit, OnDestroy {
   @ViewChild('audioRef') audioRef: ElementRef<HTMLAudioElement>;
   @ViewChild('progressRef') progressRef: ElementRef<HTMLDivElement>;
   songIds: Song[] = [];
@@ -31,7 +33,7 @@ export class PlayerComponent implements OnInit {
   isPlaying: boolean = false;
 
   // for player controller
-  isKeyMatching: boolean = false;
+  isFavorite: boolean = false;
   // time
   currentTime: number = 0;
   duration: number = 0;
@@ -39,19 +41,26 @@ export class PlayerComponent implements OnInit {
   volume: number = Number(JSON.parse(localStorage.getItem(VOLUME) as any)) || 100;
   volumePrev: number = 0;
 
+  currentUser: any;
+
   constructor(
-    private store: Store<{ menu, player, music }>,
+    private store: Store<{ menu, player, music, auth }>,
     private songService: SongService,
     private destroyService: DestroyService,
-    private notiflixService: NgxNotiflixService
+    private notiflixService: NgxNotiflixService,
+    public afs: AngularFirestore,
   ) { }
 
   ngOnInit(): void {
     this.initPlayer();
+    this.getFavoriteSong();
   }
 
   initPlayer() {
-    this.store.select('music').subscribe(state => this.songs = state.songs);
+    this.store.select('music').subscribe(state => {
+      this.songs = state.songs;
+      this.isFavorite = this.songs?.some((item) => item.key === this.songIds[this.currentIndex].key);
+    });
     this.store.select('player').pipe(takeUntil(this.destroyService.destroys$)).subscribe(state => {
       this.currentIndex = state.currentIndex;
       this.songIds = state.songIds;
@@ -59,9 +68,10 @@ export class PlayerComponent implements OnInit {
       localStorage.setItem(CURRENT_INDEX, JSON.stringify(this.currentIndex));
       localStorage.setItem(LIST_SONG, JSON.stringify(this.songIds));
       this.getSong();
-      this.isKeyMatching = this.songs?.some((item) => item.key === this.songIds[this.currentIndex].key);
+      this.isFavorite = this.songs?.some((item) => item.key === this.songIds[this.currentIndex].key);
     });
     this.store.select('menu').pipe(takeUntil(this.destroyService.destroys$)).subscribe(state => this.player = state.player);
+    this.store.select('auth').pipe(takeUntil(this.destroyService.destroys$)).subscribe(state => this.currentUser = state.currentUser);
   }
 
   getSong() {
@@ -88,7 +98,7 @@ export class PlayerComponent implements OnInit {
       }
     } else {
       this.autoPlaySong();
-      setTimeout(() => this.setSongDuration(), 3200);
+      setTimeout(() => this.setSongDuration(), 3500);
       this.addMusicFromLocal();
     }
   }
@@ -147,7 +157,8 @@ export class PlayerComponent implements OnInit {
     }))
   }
 
-  handleSeekTime(e: any) {
+  handleSeekTime = (e: any) => {
+    console.log('chạy nè');
     const clientX = e.clientX;
     const left = this.progressRef.nativeElement?.getBoundingClientRect().left;
     const width = this.progressRef.nativeElement?.getBoundingClientRect().width;
@@ -164,7 +175,7 @@ export class PlayerComponent implements OnInit {
     }
 
     if (clientX <= max && clientX >= min) {
-      const percent = Math.round((clientX - left) / width);
+      const percent = (clientX - left) / width;
       this.audioRef.nativeElement.currentTime = this.audioRef.nativeElement.duration * percent;
       this.currentTime = this.audioRef.nativeElement.duration * percent;
     }
@@ -179,6 +190,7 @@ export class PlayerComponent implements OnInit {
       this.volumePrev = this.volume;
       this.volume = 0;
     }
+    this.changeVolume();
   }
 
   changeVolume() {
@@ -196,8 +208,23 @@ export class PlayerComponent implements OnInit {
     this.isPlaying = value;
   }
 
-  handleAddSongFavorite() {
-    // do something later
+  async handleAddSongFavorite() {
+    if (!this.currentUser) {
+      return this.notiflixService.error('Cần đăng nhập để dùng tính năng này!');
+    }
+    const checkExists = this.songs.find((item) => item.key === this.songIds[this.currentIndex].key);
+    if (!checkExists) {
+      try {
+        const doc = await this.afs.doc(`favorite/${this.songIds[this.currentIndex].key}`).set({ ...this.songIds[this.currentIndex], uid: this.currentUser.uid });
+        this.store.dispatch(addSong({ song: { ...this.songIds[this.currentIndex], uid: this.currentUser.uid } }));
+      }
+      catch (error) {
+        this.notiflixService.error('Thêm bài hát vào danh sách yêu thích thất bại!');
+      }
+    } else {
+      const doc: AngularFirestoreDocument<any> = this.afs.doc(`favorite/${checkExists.key}`)
+      doc.delete().then(() => this.store.dispatch(deleteSong({ song: checkExists })));
+    }
   }
 
   handleAudioEnded() {
@@ -210,19 +237,32 @@ export class PlayerComponent implements OnInit {
     }
   }
 
-  registerMouseEvent() {
-    this.progressRef.nativeElement.addEventListener('mousedown', () => {
-      window.addEventListener('mousemove', this.handleSeekTime);
-    })
+  //kéo thả thanh Progress
+  registerEvent(event: any) {
+    window.addEventListener('mousemove', this.handleSeekTime, false);
+  }
 
-    window.addEventListener('mouseup', () => {
-      window.removeEventListener('mousemove', this.handleSeekTime);
-    })
+  @HostListener('mouseup', ['$event'])
+  removeMouseMove(event: any) {
+    window.removeEventListener('mousemove', this.handleSeekTime, false);
+  }
+
+  // after F5/Refresh/Restart songs store lost state, get from firestore
+  getFavoriteSong() {
+    let collections = this.afs.collection('favorite').valueChanges();
+    if (this.songs.length === 0) {
+      collections.pipe(takeUntil(this.destroyService.destroys$)).subscribe(res => {
+        if (res) {
+          this.store.dispatch(setSongs({ newSong: <songStoreItem[]>res }))
+        }
+      })
+    }
   }
 
   ngOnDestroy() {
-    window.removeEventListener("mouseup", () => {
-      window.removeEventListener("mousemove", this.handleSeekTime);
+    window.removeEventListener('mouseup', () => {
+      window.removeEventListener("mousemove", this.handleSeekTime, false);
     });
   }
+
 }

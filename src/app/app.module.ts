@@ -27,12 +27,12 @@ import { musicReducer } from '@stores/music/music.reducer';
 import { playerReducer } from '@stores/player/player.reducer';
 import { GridLayoutComponent, DefaultLayoutComponent, FooterComponent, SidebarComponent, PlayerComponent } from './containers';
 import { FormatTimePipe } from './core/pipes/format-time.pipe';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ...APP_CONTAINERS,
-    FormatTimePipe
+    ...APP_CONTAINERS
   ],
   imports: [
     HttpClientModule,
@@ -40,11 +40,17 @@ import { FormatTimePipe } from './core/pipes/format-time.pipe';
     AppRoutingModule,
     FormsModule,
     StoreModule.forRoot({ menu: menuReducer, auth: authReducer, music: musicReducer, player: playerReducer }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+      autoPause: true, // Pauses recording actions and state changes when the extension window is not open
+    }),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     InnerWidthDirective,
     ClickStopPropagationDirective,
-    FontSizeDirective
+    FontSizeDirective,
+    FormatTimePipe
   ],
   providers: [],
   bootstrap: [AppComponent]
