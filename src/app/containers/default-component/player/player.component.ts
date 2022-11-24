@@ -98,14 +98,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
       }
     } else {
       this.autoPlaySong();
-      setTimeout(() => this.setSongDuration(), 3500);
       this.addMusicFromLocal();
-    }
-  }
-
-  setSongDuration() {
-    if (this.audioRef.nativeElement) {
-      this.duration = this.audioRef.nativeElement.duration;
     }
   }
 
@@ -113,6 +106,9 @@ export class PlayerComponent implements OnInit, OnDestroy {
     if (this.audioRef.nativeElement && this.songIds && this.data?.song?.streamUrls) {
       this.audioRef.nativeElement.src = this.data?.song?.streamUrls[0]?.streamUrl;
       this.audioRef.nativeElement.play();
+      this.audioRef.nativeElement.addEventListener('canplaythrough', () => {
+        this.duration = this.audioRef.nativeElement.duration;
+      });
     }
   }
 

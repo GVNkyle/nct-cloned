@@ -26,6 +26,7 @@ export class MainComponent implements OnInit {
       }),
       catchError(() => {
         this.notiflixService.hideBlock(document.querySelectorAll('#container'));
+        this.notiflixService.error('Oops! Something error happened!');
         return of(null);
       })
     ));

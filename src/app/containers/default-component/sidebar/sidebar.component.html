@@ -15,7 +15,7 @@
                 <a routerLink="/profile">
                     <div class="flex items-center">
                         <div class="w-6 h-6 rounded-full overflow-hidden">
-                            <img [src]="currentUser?.photoURL" [alt]="currentUser?.displayName" />
+                            <img [src]="currentUser?.photoURL" [alt]="currentUser?.displayName" loading="eager" />
                         </div>
                         <p class="text-sm ml-2 line-clamp-1">{{currentUser?.displayName}}</p>
                     </div>

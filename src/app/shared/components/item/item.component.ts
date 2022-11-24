@@ -22,7 +22,7 @@ export class ItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.link = this.item.type ?
-      `/${this.item.type}/${this.item.key}` :
+      `/${this.item.type.toLowerCase()}/${this.item.key}` :
       this.type ?
         `/${this.type}/${this.item.key}` :
         "#"

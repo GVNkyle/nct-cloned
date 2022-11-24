@@ -13,6 +13,14 @@ const routes: Routes = [
       {
         path: "",
         loadChildren: () => import('./views/home/home.module').then(m => m.HomeModule)
+      },
+      {
+        path: "playlist",
+        loadChildren: () => import('./views/playlist/playlist.module').then(m => m.PlaylistModule)
+      },
+      {
+        path: "song",
+        loadChildren: () => import('./views/song/song.module').then(m => m.SongModule)
       }
     ]
   },
