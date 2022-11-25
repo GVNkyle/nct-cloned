@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { imgNotFound } from '@constants/utils';
 import { NgxNotiflixService } from '@services/ngx-notiflix.service';
 import { PlaylistService } from '@services/playlist.service';
 import { catchError, firstValueFrom, of, tap } from 'rxjs';
@@ -13,10 +14,12 @@ export class DetailComponent implements OnInit {
   key: string = '';
   data: any;
   artistName: string = '';
+  imgNotFound = imgNotFound;
   constructor(
     private playlistService: PlaylistService,
     private notiflixService: NgxNotiflixService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -25,7 +28,6 @@ export class DetailComponent implements OnInit {
   }
 
   async getPlaylistDetail() {
-    this.notiflixService.showBlock(document.querySelectorAll('#container'));
     await firstValueFrom(this.playlistService.getPlaylistDetail(this.key).pipe(
       tap(res => {
         this.data = res;
@@ -35,11 +37,10 @@ export class DetailComponent implements OnInit {
         this.artistName = this.data?.playlist?.artists
           ?.map((item: any) => item.name)
           .join(", ");
-        this.notiflixService.hideBlock(document.querySelectorAll('#container'));
       }),
       catchError(() => {
         this.notiflixService.error('Oops! Something error happened!');
-        this.notiflixService.hideBlock(document.querySelectorAll('#container'));
+        this.router.navigate(['/error']);
         return of(null);
       })
     ))

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Router } from '@angular/router';
+import { Event, NavigationEnd, Router } from '@angular/router';
 import {
   FacebookAuthProvider,
   GithubAuthProvider,
@@ -35,15 +35,15 @@ export class SidebarComponent implements OnInit {
   ) {
     store.select('menu').pipe(takeUntil(this.destroyService.destroys$)).subscribe(state => this.player = state.player);
     store.select('auth').pipe(takeUntil(this.destroyService.destroys$)).subscribe(state => this.currentUser = state.currentUser);
-    this.pathname = this.router.url;
-  }
-
-  ngAfterViewChecked() {
-    this.pathname = this.router.url;
   }
 
   ngOnInit(): void {
-
+    //subscribe when url changes
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        this.pathname = event.url;
+      }
+    });
   }
 
   setPlayer() {

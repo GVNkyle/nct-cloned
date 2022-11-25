@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SwiperModule } from 'swiper/angular';
 // import Swiper core and required modules
@@ -15,7 +15,7 @@ Swiper.use([Autoplay, Navigation])
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.scss']
 })
-export class SliderComponent implements OnInit {
+export class SliderComponent{
   @Input() banners: any[] = [];
   @Input() spaceBetween: number = 20;
   @Input() autoplay: boolean = false;
@@ -28,8 +28,4 @@ export class SliderComponent implements OnInit {
     loop: true
   };
   constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }

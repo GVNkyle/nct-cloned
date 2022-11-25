@@ -14,8 +14,8 @@ import { setSongId } from '@stores/player/player.actions';
 })
 export class ItemComponent implements OnInit {
   @Input() item: any;
-  @Input() type: string;
-  @Input() ratio: string = "1/1";
+  @Input() type?: string;
+  @Input() ratio?: string = "1/1";
   link: string = '';
   imgNotFound = imgNotFound;
   constructor(private store: Store<{ player }>) { }

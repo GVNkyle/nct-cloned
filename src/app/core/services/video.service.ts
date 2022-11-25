@@ -9,7 +9,7 @@ export class VideoService {
   apiUrl = environment.apiUrl;
   constructor(private http: HttpClient) { }
 
-  getTopicDetail(key: string) {
+  getVideoDetail(key: string) {
     let params = new HttpParams().append('key', key);
     return this.http.get(`${this.apiUrl}video`, { params });
   }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SwiperModule } from 'swiper/angular';
 // import Swiper core and required modules
@@ -13,7 +13,7 @@ Swiper.use([Autoplay, Navigation])
   templateUrl: './banner.component.html',
   styleUrls: ['./banner.component.scss']
 })
-export class BannerComponent implements OnInit {
+export class BannerComponent {
   @Input() banners: any[] = [];
   config: SwiperOptions = {
     slidesPerView: 1,
@@ -23,7 +23,4 @@ export class BannerComponent implements OnInit {
     loop: true,
   };
   constructor() { }
-
-  ngOnInit(): void {
-  }
 }

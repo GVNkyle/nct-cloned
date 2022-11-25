@@ -21,8 +21,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.notiflixService.init({
-      // loadingSvgUrl: 'assets/img/loader.svg',
-      // loadingType: 'custom',
+      loadingSvgUrl: 'assets/loading.svg',
+      loadingType: 'custom',
       okButton: 'Okie',
     });
 
@@ -42,6 +42,10 @@ export class AppComponent implements OnInit {
 
     if (e instanceof NavigationEnd || e instanceof NavigationCancel || e instanceof NavigationError) {
       this.notiflixService.hideLoading();
+    }
+
+    if (e instanceof NavigationError) {
+      this.router.navigate(['/error']);
     }
   }
 }

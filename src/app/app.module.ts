@@ -7,11 +7,11 @@ import { HttpClientModule } from '@angular/common/http';
 //firebase
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 const APP_CONTAINERS = [
-  GridLayoutComponent,
   DefaultLayoutComponent,
   FooterComponent,
   SidebarComponent,
@@ -25,9 +25,8 @@ import { menuReducer } from '@stores/menu/menu.reducer';
 import { authReducer } from '@stores/auth/auth.reducer';
 import { musicReducer } from '@stores/music/music.reducer';
 import { playerReducer } from '@stores/player/player.reducer';
-import { GridLayoutComponent, DefaultLayoutComponent, FooterComponent, SidebarComponent, PlayerComponent } from './containers';
+import { DefaultLayoutComponent, FooterComponent, SidebarComponent, PlayerComponent } from './containers';
 import { FormatTimePipe } from './core/pipes/format-time.pipe';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [

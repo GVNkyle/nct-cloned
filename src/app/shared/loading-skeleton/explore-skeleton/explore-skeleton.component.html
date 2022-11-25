@@ -1,0 +1,8 @@
+<div>
+    <h1 class="mb-5 w-[150px] h-5 skeleton"></h1>
+    <div class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4">
+        <ng-container *ngFor="let item of longArr">
+            <div [style.aspectRatio]="ratio" class="rounded-md skeleton"></div>
+        </ng-container>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+<ng-container *ngIf="!data; else block">
+    <div class="px4">
+        <app-banner-skeleton></app-banner-skeleton>
+        <div class="mb-5">
+            <p class="w-full h-5 skeleton mb-2"></p>
+            <p class="w-full h-5 skeleton mb-2"></p>
+            <p class="h-5 skeleton w-[80%]"></p>
+        </div>
+    </div>
+    <div class="px-4">
+        <app-explore-skeleton ratio="1/1"></app-explore-skeleton>
+    </div>
+</ng-container>
+<ng-template #block>
+    <div class="px-4">
+        <div class="aspect-[3/1] w-full">
+            <img [src]="data?.topic?.coverImageURL" [alt]="data?.topic?.title">
+        </div>
+
+        <div class="py-4">
+            <p #desc class="text-[14px] font-normal text-gray-500 line-clamp-2">
+                {{data?.topic?.description}}
+            </p>
+
+            <div (click)="handleShowAll()"
+                class="text-[14px] font-normal text-gray-500 cursor-pointer flex items-center mt-1">
+                {{desc?.classList?.contains('show-all') ? "Thu gọn" : "Xem thêm"}} {{" "}}
+                <i class="fa-solid fa-chevron-down w-4 h-4 ml-1"></i>
+            </div>
+        </div>
+        <div>
+            <h1 class="mb-5 font-semibold text-xl">{{data?.topic?.title}}</h1>
+            <div class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4">
+                <ng-container *ngFor="let item of data?.topic?.playlist">
+                    <app-item [item]="item"></app-item>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</ng-template>

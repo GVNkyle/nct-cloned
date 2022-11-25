@@ -1,0 +1,97 @@
+<div class="px-4">
+    <ng-container *ngIf="!data; else block">
+        <div>
+            <h1 class="mb-5 skeleton h-6 w-[150px]"></h1>
+            <div class="skeleton w-full h-[200px] rounded-md mb-5"></div>
+            <div *ngFor="let item of longArr">
+                <app-song-item-skeleton></app-song-item-skeleton>
+            </div>
+        </div>
+    </ng-container>
+    <ng-template #block>
+        <div>
+            <h1 class="text-xl font-semibold">Bảng xếp hạng âm nhạc</h1>
+            <div>
+                <!-- Banner -->
+                <div (click)="handlePlayAll(0)" class="mt-5 p-5 bg-gray-100 rounded-md md:flex hidden">
+                    <div class="relative">
+                        <div class="w-[160px] h-[160px] rounded-md overflow-hidden">
+                            <img [src]="data?.ranking?.song[0].thumbnail" [alt]="data?.ranking?.song[0].title">
+                        </div>
+                        <div class="absolute top-[-5px] left-[-5px] bg-red-500 rounded-sm px-2 py-1 text-white text-sm">
+                            Top 1
+                        </div>
+                    </div>
+                    <div class="flex-1 ml-5">
+                        <!-- name -->
+                        <div class="border-gray-200 border-b pb-4">
+                            <div class="border-gray-200 border-b pb-4">
+                                <p>
+                                    <span class="mr-1 text-sm text-gray-400">Bài hát: </span>
+                                    {{data?.ranking?.song[0].title}}
+                                </p>
+                                <div class="mt-2 flex items-center">
+                                    <div class="flex">
+                                        <ng-container *ngFor="let item of data?.ranking?.song[0]?.artists">
+                                            <a [routerLink]="item.link"
+                                                class="w-5 h-5 rounded-full overflow-hidden block">
+                                                <img [src]="item?.imageUrl" alt="">
+                                            </a>
+                                        </ng-container>
+                                    </div>
+                                    <p class="text-sm text-gray-400 ml-2">
+                                        {{data?.ranking?.song[0].artistName}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- rank detail -->
+                        <div class="mt-5 grid grid-cols-3">
+                            <div>
+                                <p class="text-2xl text-yellow-500 font-semibold">
+                                    {{data?.ranking?.song[0]?.oldPosition}}
+                                </p>
+                                <p className="text-gray-400 mt-3 lg:text-md text-xs">TUẦN TRƯỚC</p>
+                            </div>
+                            <div>
+                                <p class="text-2xl text-blue-500 font-semibold">
+                                    {{data?.ranking?.song[0]?.highestPosition}}
+                                </p>
+                                <p className="text-gray-400 mt-3 lg:text-md text-xs">CAO NHẤT</p>
+                            </div>
+                            <div>
+                                <p class="text-2xl text-green-500 font-semibold">
+                                    {{data?.ranking?.song[0]?.totalWeekInRanked}}
+                                </p>
+                                <p className="text-gray-400 mt-3 lg:text-md text-xs">TUẦN TRONG BXH</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-5">
+                <!-- chart item -->
+                <ng-container *ngFor="let item of data?.ranking?.song; let i = index">
+                    <div class="mb-4 cursor-pointer" (click)="handlePlayAll(i)">
+                        <div class="flex items-center">
+                            <div
+                                className="w-10 h-10 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center">
+                                {{i + 1}}
+                            </div>
+                            <div className="ml-4 bg-gray-100 w-full rounded-md p-2 flex flex-1">
+                                <div className="w-10 h-10 rounded-md overflow-hidden">
+                                    <img [src]="item.thumbnail" [alt]="item.title" loading="lazy" width="100%"
+                                        height="100%">
+                                </div>
+                                <div class="flex-1 ml-3">
+                                    <p class="text-sm font-medium line-clamp-1">{{item.title}}</p>
+                                    <p class="text-xs text-gray-400 mt-1 line-clamp-1">{{item.artistName}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </ng-template>
+</div>

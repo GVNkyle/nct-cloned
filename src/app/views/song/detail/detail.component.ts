@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { imgNotFound } from '@constants/utils';
 import { NgxNotiflixService } from '@services/ngx-notiflix.service';
 import { SongService } from '@services/song.service';
 import { firstValueFrom, tap, catchError, of } from 'rxjs';
@@ -14,18 +15,18 @@ export class DetailComponent implements OnInit {
   data: any;
   artistName: string = '';
   lyric: any;
+  imgNotFound = imgNotFound;
   constructor(
     private songService: SongService,
     private notiflixService: NgxNotiflixService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   async ngOnInit(): Promise<void> {
-    this.notiflixService.showBlock(document.querySelectorAll('#container'));
     this.key = this.route.snapshot.paramMap.get('key');
     await this.getSong();
     await this.getLyric();
-    this.notiflixService.hideBlock(document.querySelectorAll('#container'));
   }
 
   async getSong() {
@@ -41,6 +42,7 @@ export class DetailComponent implements OnInit {
       }),
       catchError(() => {
         this.notiflixService.error('Oops! Something error happened!');
+        this.router.navigate(['/error']);
         return of(null);
       })
     ))
@@ -53,6 +55,7 @@ export class DetailComponent implements OnInit {
       }),
       catchError(() => {
         this.notiflixService.error('Oops! Something error happened!');
+        this.router.navigate(['/error']);
         return of(null);
       })
     ))

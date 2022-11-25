@@ -12,7 +12,7 @@ const routes: Routes = [
     children: [
       {
         path: "",
-        loadChildren: () => import('./views/home/home.module').then(m => m.HomeModule)
+        loadComponent: () => import('./views/home/home.component').then(c => c.HomeComponent)
       },
       {
         path: "playlist",
@@ -21,6 +21,26 @@ const routes: Routes = [
       {
         path: "song",
         loadChildren: () => import('./views/song/song.module').then(m => m.SongModule)
+      },
+      {
+        path: 'video',
+        loadChildren: () => import('./views/video/video.module').then(m => m.VideoModule)
+      },
+      {
+        path: 'artist',
+        loadChildren: () => import('./views/artist/artist.module').then(m => m.ArtistModule)
+      },
+      {
+        path: 'topics',
+        loadChildren: () => import('./views/topics/topics.module').then(m => m.TopicsModule)
+      },
+      {
+        path: 'bxh',
+        loadComponent: () => import('./views/chart/chart.component').then(c => c.ChartComponent)
+      },
+      {
+        path: 'error',
+        loadComponent: () => import('./views/error/error.component').then(c => c.ErrorComponent)
       }
     ]
   },

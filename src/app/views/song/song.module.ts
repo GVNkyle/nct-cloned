@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { SongRoutingModule } from './song-routing.module';
 import { MainComponent } from './main/main.component';
 import { DetailComponent } from './detail/detail.component';
+import { DetailSkeletonComponent } from '@skeletons/detail-skeleton/detail-skeleton.component';
+import { ExploreComponent } from '@components/explore/explore.component';
 
 
 @NgModule({
@@ -13,7 +15,9 @@ import { DetailComponent } from './detail/detail.component';
   ],
   imports: [
     CommonModule,
-    SongRoutingModule
+    SongRoutingModule,
+    DetailSkeletonComponent,
+    ExploreComponent
   ]
 })
 export class SongModule { }

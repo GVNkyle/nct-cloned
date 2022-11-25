@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Song } from '@models/song';
 import { Store } from '@ngrx/store';
@@ -13,14 +13,11 @@ import { setSongAndIndex } from '@stores/player/player.actions';
   templateUrl: './wrap-song.component.html',
   styleUrls: ['./wrap-song.component.scss'],
 })
-export class WrapSongComponent implements OnInit {
+export class WrapSongComponent{
   @Input() songs: Song[] = [];
   constructor(
     private store: Store<{ player, menu }>
   ) { }
-
-  ngOnInit(): void {
-  }
 
   handleClick(index: number) {
     this.store.dispatch(setPlayer());

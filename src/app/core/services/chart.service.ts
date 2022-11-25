@@ -5,11 +5,11 @@ import { environment } from '@env/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class BxhService {
+export class ChartService {
   apiUrl = environment.apiUrl;
   constructor(private http: HttpClient) { }
 
-  getBXH(){
+  getChart(){
     return this.http.get(`${this.apiUrl}bxh`);
   }
 }

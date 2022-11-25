@@ -1,0 +1,34 @@
+<ng-container *ngIf="!data; else elseBlock">
+    <div class="px-4">
+        <div class="w-full skeleton aspect-video"></div>
+        <h1 class="text-xl font-semibold mt-5 h-5 skeleton w-[200px]"></h1>
+        <div class="flex items-center mt-5">
+            <div class="w-10 h-10 rounded-full skeleton"></div>
+            <div class="w-10 h-10 rounded-full skeleton"></div>
+            <p class="h-4 skeleton w-[100px] ml-3"></p>
+        </div>
+    </div>
+</ng-container>
+<ng-template #elseBlock>
+    <div class="px-4">
+        <div class="w-full aspect-video">
+            <ng-container *ngIf="data?.video?.streamUrls">
+                <video [src]="data?.video?.streamUrls[0]?.streamUrl" controls class="w-full h-full"></video>
+            </ng-container>
+        </div>
+        <h1 class="text-xl font-semibold mt-5">{{data?.video?.title}}</h1>
+        <div class="mt-5 flex items-center">
+            <ng-container *ngFor="let item of data?.video?.artists">
+                <a [routerLink]="item.link">
+                    <div class="rounded-full w-10 h-10 overflow-hidden border">
+                        <img [src]="item?.imageUrl || imgNotFound" class="rounded-full" />
+                    </div>
+                </a>
+            </ng-container>
+            <p class="ml-3">
+                <span class="font-semibold">Nghệ Sĩ: </span>
+                {{artistName}}
+            </p>
+        </div>
+    </div>
+</ng-template>

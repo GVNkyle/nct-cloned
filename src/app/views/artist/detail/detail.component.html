@@ -1,0 +1,50 @@
+<ng-container *ngIf="!data;else block">
+    <div class="px-4">
+        <app-banner-skeleton></app-banner-skeleton>
+        <app-slider-skeleton></app-slider-skeleton>
+        <app-list-song-skeleton></app-list-song-skeleton>
+    </div>
+</ng-container>
+<ng-template #block>
+    <div class="px-4">
+        <div class="aspect-[3/1] w-full relative mb-5">
+            <img [src]="data?.artist?.coverImageURL || imgNotFound" alt="">
+            <div class="absolute left-0 bottom-0 m-4 pr-4 rounded-full shadow-md flex items-center bg-black">
+                <div class="w-12 h-12 rounded-full overflow-hidden">
+                    <img [src]="data?.artist?.imageUrl" class="rounded-full" [alt]="data?.artist?.name">
+                </div>
+                <p class="text-white ml-2 font-semibold">
+                    {{data?.artist?.name}}
+                </p>
+            </div>
+        </div>
+
+        <ng-container *ngIf="data?.songNearly">
+            <div>
+                <h1 class="mb-5 font-semibold text-xl">Gần Đây</h1>
+                <app-slider [banners]="data?.songNearly"></app-slider>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="data?.song?.song">
+            <div>
+                <h1 class="my-5 font-semibold text-xl">Bài Hát</h1>
+                <app-wrap-song [songs]="data?.song?.song"></app-wrap-song>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="data?.playlist?.playlist">
+            <div>
+                <h1 class="my-5 font-semibold text-xl">Playlist</h1>
+                <app-slider [banners]="data?.playlist?.playlist"></app-slider>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="data?.video?.video">
+            <div>
+                <h1 class="my-5 font-semibold text-xl">Video</h1>
+                <app-slider [banners]="data?.video?.video" ratio="16/9"></app-slider>
+            </div>
+        </ng-container>
+    </div>
+</ng-template>

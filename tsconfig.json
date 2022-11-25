@@ -57,6 +57,9 @@
       ],
       "@components/*": [
         "src/app/shared/components/*"
+      ],
+      "@skeletons/*": [
+        "src/app/shared/loading-skeleton/*"
       ]
     },
   },
