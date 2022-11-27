@@ -6,6 +6,8 @@ import {
 } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { User } from '@models/user';
+import { Store } from '@ngrx/store';
+import { tap } from 'rxjs';
 import { NgxNotiflixService } from './ngx-notiflix.service';
 
 @Injectable({
@@ -17,11 +19,18 @@ export class AuthService {
     public afAuth: AngularFireAuth,
     public router: Router,
     public ngZone: NgZone,
-    private notiflixService: NgxNotiflixService
+    private notiflixService: NgxNotiflixService,
+    private store: Store<{ auth }>
   ) { }
 
   async signOut() {
     await this.afAuth.signOut();
+  }
+
+  public async isLogin(){
+    let currentUser;
+    await this.store.select('auth').pipe(tap(state => currentUser = state.currentUser));
+    return !!currentUser;
   }
 
   private setUserData(user: any) {

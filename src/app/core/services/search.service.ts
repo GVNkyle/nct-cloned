@@ -14,4 +14,8 @@ export class SearchService {
     return this.http.get(`${this.apiUrl}search`, { params });
   }
 
+  getTopKeyword(){
+    return this.http.get(`${this.apiUrl}top-keyword`);
+  }
+
 }

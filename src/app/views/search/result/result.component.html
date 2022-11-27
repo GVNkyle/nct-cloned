@@ -1,0 +1,61 @@
+<div class="px-4">
+    <ng-container *ngIf="!data; else block">
+        <div>
+            <h1 class="mb-5 font-semibold text-2xl h-8 skeleton"></h1>
+            <app-list-song-skeleton></app-list-song-skeleton>
+            <app-slider-skeleton></app-slider-skeleton>
+            <app-slider-skeleton></app-slider-skeleton>
+        </div>
+    </ng-container>
+    <ng-template #block>
+        <div>
+            <h1 class="mb-5 font-semibold text-2xl">Kết Quả Cho "{{key}}"</h1>
+            <div>
+                <div>
+                    <ng-container *ngIf="data?.recommend?.song?.length > 0">
+                        <div class="mb-5">
+                            <h1 class="mb-5 font-semibold text-xl">Top Bài Hát Tìm Kiếm</h1>
+                            <app-wrap-song [songs]="data?.recommend?.song"></app-wrap-song>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="data?.recommend?.video?.length > 0">
+                        <div class="mb-5">
+                            <h1 class="mb-5 font-semibold text-xl">Top MV Tìm Kiếm</h1>
+                            <app-wrap-song [songs]="data?.recommend?.video"></app-wrap-song>
+                        </div>
+                    </ng-container>
+                </div>
+                <div>
+                    <ng-container *ngIf="data?.search?.song?.song?.length > 0">
+                        <div class="mb-5">
+                            <h1 class="mb-5 font-semibold text-xl">Bài Hát</h1>
+                            <app-wrap-song [songs]="data?.search?.song?.song"></app-wrap-song>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="data?.search?.playlist?.playlist?.length > 0">
+                        <div class="mb-5">
+                            <h1 class="mb-5 font-semibold text-xl">Playlists</h1>
+                            <app-slider [banners]="data?.search?.playlist?.playlist" [spaceBetween]="20"></app-slider>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="data?.search?.artist?.artist?.length > 0">
+                        <div class="mb-5">
+                            <h1 class="mb-5 font-semibold text-xl">Nghệ Sĩ</h1>
+                            <app-slider [banners]="data?.search?.artist?.artist" [spaceBetween]="20"></app-slider>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="data?.search?.video?.video?.length > 0">
+                        <div class="mb-5">
+                            <h1 class="mb-5 font-semibold text-xl">Video</h1>
+                            <app-slider ratio="16/9" [banners]="data?.search?.video?.video" [spaceBetween]="20"></app-slider>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>

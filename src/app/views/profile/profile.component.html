@@ -1,0 +1,42 @@
+<div class="px-4">
+    <div class="flex items-center pb-5 border-b border-[#EAEBEB]">
+        <div class="w-[160px] h-[160px] rounded-md overflow-hidden">
+            <img [src]="currentUser?.photoURL" [alt]="currentUser?.displayName">
+        </div>
+        <div class="ml-4 flex-1">
+            <h1 class="font-semibold line-clamp-2">
+                {{currentUser?.displayName}}
+            </h1>
+            <button (click)="handleUpdate()" class="text-sm text-gray-600 bg-gray-200 py-2 mt-4 px-4 rounded-md">
+                Cập Nhật
+            </button>
+        </div>
+    </div>
+    <div class="mt-5">
+        <h1 class="text-xl font-semibold">
+            Thông tin cá nhân
+        </h1>
+        <ul class="mt-5">
+            <li class="bg-gray-200 text-black py-2 mb-4 px-4 rounded-md text-sm flex items-center font-semibold">
+                <span class="text-gray-400 mr-1">Tên hiển thị: </span>
+                {{currentUser?.displayName}
+            </li>
+            <li class="bg-gray-200 text-black py-2 mb-4 px-4 rounded-md text-sm flex items-center font-semibold">
+                <span class="text-gray-400 mr-1">Email: </span>
+                {{currentUser?.email}}
+            </li>
+            <li class="bg-gray-200 text-black py-2 mb-4 px-4 rounded-md text-sm flex items-center font-semibold">
+                <span class="text-gray-400 mr-1">Website: </span>
+                Chưa có
+            </li>
+            <li class="bg-gray-200 text-black py-2 mb-4 px-4 rounded-md text-sm flex items-center font-semibold">
+                <span class="text-gray-400 mr-1">Giới tính: </span>
+                Chưa có
+            </li>
+            <li class="bg-gray-200 text-black py-2 mb-4 px-4 rounded-md text-sm flex items-center font-semibold">
+                <span class="text-gray-400 mr-1">Số điện thoại: </span>
+                Chưa có
+            </li>
+        </ul>
+    </div>
+</div>

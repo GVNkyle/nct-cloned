@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '@guards/auth.guard';
 import { DefaultLayoutComponent } from './containers';
 
 const routes: Routes = [
+  { path: "**", redirectTo: "home", pathMatch: "full" },
   {
     path: "",
     component: DefaultLayoutComponent,
@@ -11,7 +13,7 @@ const routes: Routes = [
     },
     children: [
       {
-        path: "",
+        path: "home",
         loadComponent: () => import('./views/home/home.component').then(c => c.HomeComponent)
       },
       {
@@ -39,12 +41,24 @@ const routes: Routes = [
         loadComponent: () => import('./views/chart/chart.component').then(c => c.ChartComponent)
       },
       {
+        path: 'profile',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./views/profile/profile.component').then(c => c.ProfileComponent)
+      },
+      {
+        path: 'history',
+        loadComponent: () => import('./views/history/history.component').then(c => c.HistoryComponent)
+      },
+      {
+        path: 'search',
+        loadChildren: () => import('./views/search/search.module').then(m => m.SearchModule)
+      },
+      {
         path: 'error',
         loadComponent: () => import('./views/error/error.component').then(c => c.ErrorComponent)
       }
     ]
-  },
-  { path: '**', redirectTo: '' }
+  }
 ];
 
 @NgModule({

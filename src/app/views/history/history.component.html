@@ -1,0 +1,20 @@
+<div class="px-4">
+    <div class="flex items-center justify-between">
+        <h1 class="text-xl font-semibold">Lịch sử đã nghe</h1>
+        <button (click)="handleDeleteHistory()">
+            <i class="fa-thin fa-trash-can w-6 h-6 text-blue-500"></i>
+        </button>
+    </div>
+    <div>
+        <ng-container *ngIf="historyMusic.length > 0; else block">
+            <app-wrap-song [songs]="historyMusic"></app-wrap-song>
+        </ng-container>
+        <ng-template #block>
+            <div class="w-full text-center mt-10">
+                <div class="text-xl font-semibold">
+                    Chưa có lịch sử nghe gần đây!
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</div>

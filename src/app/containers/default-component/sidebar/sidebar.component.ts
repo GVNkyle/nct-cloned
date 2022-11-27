@@ -43,7 +43,7 @@ export class SidebarComponent implements OnInit {
       if (event instanceof NavigationEnd) {
         this.pathname = event.url;
       }
-    });
+    });    
   }
 
   setPlayer() {

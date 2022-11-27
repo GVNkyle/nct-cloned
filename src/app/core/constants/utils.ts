@@ -22,9 +22,8 @@ export const addMusicFromLocal = (song: Song): void => {
     let historyMusic: Song[] = JSON.parse(localStorage.getItem(HISTORY) as string) || [];
     const existsMusic = historyMusic.some((item) => item.key === song.key);
     if(existsMusic){
-        historyMusic = historyMusic.filter((item) => item.key === song.key);
+        historyMusic = historyMusic.filter((item) => item.key !== song.key);
     }
-
     historyMusic.unshift(song);
     localStorage.setItem(HISTORY, JSON.stringify(historyMusic));
 }

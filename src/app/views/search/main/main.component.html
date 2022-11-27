@@ -1,0 +1,40 @@
+<div class="px-4">
+    <div>
+        <form class="flex items-center rounded-sm w-full bg-gray-200 px-4" (ngSubmit)="onSubmit()" #form="ngForm">
+            <i class="fa-solid fa-magnifying-glass w-5 h-5 text-blue-500"></i>
+            <input [(ngModel)]="searchText" name="search" type="text" class="flex-1 py-2 px-4 outline-none bg-transparent"
+                placeholder="Tìm kiếm...">
+        </form>
+        <ng-container *ngIf="!trendingArtists || !trendingKeyword;else block">
+            <ng-container *ngFor="let item of skeletonArr">
+                <div class="mt-5">
+                    <h1 class="mb-5 font-semibold text-xl skeleton h-6">
+                        <div class="flex items-center flex-wrap gap-2">
+                            <ng-container *ngFor="let item of longArr">
+                                <div class="w-[100px] py-4 skeleton"></div>
+                            </ng-container>
+                        </div>
+                    </h1>
+                </div>
+            </ng-container>
+        </ng-container>
+        <ng-template #block>
+            <div class="mt-5">
+                <h1 class="mb-5 font-semibold text-xl">Từ Khóa Hàng Đầu</h1>
+                <div class="flex items-center flex-wrap gap-2">
+                    <ng-container *ngFor="let item of trendingKeyword?.topkeyword">
+                        <app-trending-item [name]="item.name" [position]="item.order"></app-trending-item>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="mt-5">
+                <h1 class="mb-5 font-semibold text-xl">Nghệ Sĩ Nổi Bật</h1>
+                <div class="flex items-center flex-wrap gap-2">
+                    <ng-container *ngFor="let item of trendingArtists?.artistTrending">
+                        <app-trending-item [name]="item.name" [position]="item.position"></app-trending-item>
+                    </ng-container>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</div>
