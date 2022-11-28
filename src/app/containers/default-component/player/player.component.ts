@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { imgNotFound, addMusicFromLocal } from '@constants/utils';
-import { Song, songStoreItem } from '@models/song';
+import { Song, SongDetail, songStoreItem } from '@models/song';
 import { Store } from '@ngrx/store';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { takeUntil, tap } from 'rxjs';
@@ -23,8 +23,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
   @ViewChild('progressRef') progressRef: ElementRef<HTMLDivElement>;
   songIds: Song[] = [];
   currentIndex: number = 0;
-  artist: any;
-  data: any;
+  artist: string = '';
+  data: SongDetail = null;
   player: boolean;
   imgNotFound = imgNotFound;
   songs: songStoreItem[] = [];
@@ -79,11 +79,11 @@ export class PlayerComponent implements OnInit, OnDestroy {
     if (this.songIds && songKey) {
       this.songService.getSong(songKey).subscribe(
         (res) => {
-          this.data = res;
+          this.data = res;    
           if (!this.data) {
             this.audioRef.nativeElement.pause();
           }
-          this.artist = this.data?.song?.artists?.map((item: any) => item.name).join(", ");
+          this.artist = this.data?.artists?.map((item: any) => item.name).join(", ");
           this.checkSong();
         }
       );
@@ -91,7 +91,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
 
   checkSong() {
-    if (this.data?.song?.streamUrls?.length === 0) {
+    if (this.data?.streamUrls?.length === 0) {
       this.notiflixService.error('Không tìm thấy bài hát!');
       if (this.currentIndex !== this.songIds.length - 1) {
         this.store.dispatch(setCurrentIndex({ currentIndex: this.currentIndex + 1 }));
@@ -103,8 +103,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
 
   autoPlaySong() {
-    if (this.audioRef.nativeElement && this.songIds && this.data?.song?.streamUrls) {
-      this.audioRef.nativeElement.src = this.data?.song?.streamUrls[0]?.streamUrl;
+    if (this.audioRef.nativeElement && this.songIds && this.data?.streamUrls) {
+      this.audioRef.nativeElement.src = this.data?.streamUrls[0]?.streamUrl;
       this.audioRef.nativeElement.play();
       this.audioRef.nativeElement.addEventListener('canplaythrough', () => {
         this.duration = this.audioRef.nativeElement.duration;
@@ -154,7 +154,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
 
   handleSeekTime = (e: any) => {
-    console.log('chạy nè');
     const clientX = e.clientX;
     const left = this.progressRef.nativeElement?.getBoundingClientRect().left;
     const width = this.progressRef.nativeElement?.getBoundingClientRect().width;

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { imgNotFound } from '@constants/utils';
+import { ArtistDetails } from '@models/artist';
 import { ArtistService } from '@services/artist.service';
 import { NgxNotiflixService } from '@services/ngx-notiflix.service';
 import { catchError, firstValueFrom, of, tap } from 'rxjs';
@@ -11,7 +12,7 @@ import { catchError, firstValueFrom, of, tap } from 'rxjs';
   styleUrls: ['./detail.component.scss']
 })
 export class DetailComponent implements OnInit {
-  data: any;
+  data: ArtistDetails = null;
   shortLink: string = '';
   imgNotFound = imgNotFound;
   constructor(

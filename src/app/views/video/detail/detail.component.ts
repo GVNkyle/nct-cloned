@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { imgNotFound } from '@constants/utils';
+import { VideoDetail } from '@models/video';
 import { NgxNotiflixService } from '@services/ngx-notiflix.service';
 import { VideoService } from '@services/video.service';
 import { firstValueFrom, tap, catchError, of } from 'rxjs';
@@ -11,7 +12,7 @@ import { firstValueFrom, tap, catchError, of } from 'rxjs';
   styleUrls: ['./detail.component.scss']
 })
 export class DetailComponent implements OnInit {
-  data: any;
+  data: VideoDetail = null;
   key: string = '';
   artistName: string = '';
   imgNotFound = imgNotFound;
@@ -31,11 +32,10 @@ export class DetailComponent implements OnInit {
     await firstValueFrom(this.videoService.getVideoDetail(this.key).pipe(
       tap(res => {
         this.data = res;
-        console.log(res);
-        this.data?.video?.artists?.map((item: any) => {
+        this.data?.artists?.map((item: any) => {
           item.link = item.shortLink ? `/artist/${item.shortLink}` : "#"
         });
-        this.artistName = this.data?.video?.artists
+        this.artistName = this.data?.artists
           ?.map((item: any) => item.name)
           .join(", ");
       }),

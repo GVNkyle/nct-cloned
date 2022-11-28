@@ -33,8 +33,8 @@ export class ExploreComponent implements OnInit {
 
   async getExplore() {
     await firstValueFrom(this.exploreService.getExplore(this.pageNumber, this.type).pipe(
-      tap((res: any) => {
-        this.data = [...this.data, ...res.data];
+      tap((res) => {
+        this.data = [...this.data, ...res];
       }),
       catchError(() => {
         this.notiflixService.error('Oops! Something error happened!');

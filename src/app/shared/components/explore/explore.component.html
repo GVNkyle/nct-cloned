@@ -1,5 +1,5 @@
 <div class="px-4">
-    <ng-container *ngIf="!data; else elseBlock">
+    <ng-container *ngIf="data.length === 0; else elseBlock">
         <app-explore-skeleton [ratio]="ratio"></app-explore-skeleton>
     </ng-container>
     <ng-template #elseBlock>

@@ -9,6 +9,7 @@ import { setPlayer } from '@stores/menu/menu.actions';
 import { setSongAndIndex } from '@stores/player/player.actions';
 import { ChartService } from '@services/chart.service';
 import { firstValueFrom, tap, catchError, of } from 'rxjs';
+import { Ranking } from '@models/index';
 
 @Component({
   selector: 'app-chart',
@@ -23,7 +24,7 @@ import { firstValueFrom, tap, catchError, of } from 'rxjs';
   styleUrls: ['./chart.component.scss']
 })
 export class ChartComponent implements OnInit {
-  data: any;
+  data: Ranking = null;
   longArr = Array.apply(0, Array(10));
   constructor(
     private store: Store<{ menu, player }>,
@@ -38,7 +39,7 @@ export class ChartComponent implements OnInit {
 
   handlePlayAll(index: number) {
     if (this.data) {
-      const _songIds = this.data?.ranking?.song?.map((item: any) => ({
+      const _songIds = this.data?.song?.map((item: any) => ({
         title: item.title,
         thumbnail: item.thumbnail,
         artists: item.artists,
@@ -49,10 +50,13 @@ export class ChartComponent implements OnInit {
     }
   }
 
-  async getChart(){
+  async getChart() {
     await firstValueFrom(this.chartService.getChart().pipe(
       tap(res => {
         this.data = res;
+        this.data.song.map((item) => {
+          item.artistName = item?.artists?.map((item: any) => item.name).join(", ")
+        })
       }),
       catchError(() => {
         this.notiflixService.error('Oops! Something error happened!');

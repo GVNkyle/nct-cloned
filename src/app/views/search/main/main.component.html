@@ -22,7 +22,7 @@
             <div class="mt-5">
                 <h1 class="mb-5 font-semibold text-xl">Từ Khóa Hàng Đầu</h1>
                 <div class="flex items-center flex-wrap gap-2">
-                    <ng-container *ngFor="let item of trendingKeyword?.topkeyword">
+                    <ng-container *ngFor="let item of trendingKeyword">
                         <app-trending-item [name]="item.name" [position]="item.order"></app-trending-item>
                     </ng-container>
                 </div>
@@ -30,7 +30,7 @@
             <div class="mt-5">
                 <h1 class="mb-5 font-semibold text-xl">Nghệ Sĩ Nổi Bật</h1>
                 <div class="flex items-center flex-wrap gap-2">
-                    <ng-container *ngFor="let item of trendingArtists?.artistTrending">
+                    <ng-container *ngFor="let item of trendingArtists">
                         <app-trending-item [name]="item.name" [position]="item.position"></app-trending-item>
                     </ng-container>
                 </div>

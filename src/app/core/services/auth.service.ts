@@ -7,7 +7,7 @@ import {
 import { Router } from '@angular/router';
 import { User } from '@models/user';
 import { Store } from '@ngrx/store';
-import { tap } from 'rxjs';
+import { firstValueFrom, tap } from 'rxjs';
 import { NgxNotiflixService } from './ngx-notiflix.service';
 
 @Injectable({
@@ -29,7 +29,7 @@ export class AuthService {
 
   public async isLogin(){
     let currentUser;
-    await this.store.select('auth').pipe(tap(state => currentUser = state.currentUser));
+    await firstValueFrom(this.store.select('auth').pipe(tap(state => currentUser = state.currentUser)));
     return !!currentUser;
   }
 

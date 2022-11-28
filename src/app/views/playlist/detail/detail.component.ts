@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { imgNotFound } from '@constants/utils';
+import { PlaylistDetail } from '@models/playlist';
 import { NgxNotiflixService } from '@services/ngx-notiflix.service';
 import { PlaylistService } from '@services/playlist.service';
 import { catchError, firstValueFrom, of, tap } from 'rxjs';
@@ -12,7 +13,7 @@ import { catchError, firstValueFrom, of, tap } from 'rxjs';
 })
 export class DetailComponent implements OnInit {
   key: string = '';
-  data: any;
+  data: PlaylistDetail = null;
   artistName: string = '';
   imgNotFound = imgNotFound;
   constructor(
@@ -31,10 +32,10 @@ export class DetailComponent implements OnInit {
     await firstValueFrom(this.playlistService.getPlaylistDetail(this.key).pipe(
       tap(res => {
         this.data = res;
-        this.data?.playlist?.artists?.map((item: any) => {
+        this.data?.artists?.map((item: any) => {
           item.link = item.shortLink ? `/artist/${item.shortLink}` : "#"
         });
-        this.artistName = this.data?.playlist?.artists
+        this.artistName = this.data?.artists
           ?.map((item: any) => item.name)
           .join(", ");
       }),

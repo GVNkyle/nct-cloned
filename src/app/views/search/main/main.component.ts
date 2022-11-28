@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TrendingArtists } from '@models/artist';
+import { Keyword } from '@models/index';
 import { ArtistService } from '@services/artist.service';
 import { NgxNotiflixService } from '@services/ngx-notiflix.service';
 import { SearchService } from '@services/search.service';
@@ -12,8 +14,8 @@ import { catchError, firstValueFrom, of, tap } from 'rxjs';
 })
 export class MainComponent implements OnInit {
   searchText: string = '';
-  trendingArtists: any;
-  trendingKeyword: any;
+  trendingArtists: TrendingArtists[] = null;;
+  trendingKeyword: Keyword[] = null;
   longArr = Array.apply(0, Array(8))
   skeletonArr = Array.apply(0, Array(2));
   constructor(

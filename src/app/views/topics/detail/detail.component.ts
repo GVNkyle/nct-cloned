@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TopicDetail } from '@models/topics';
 import { NgxNotiflixService } from '@services/ngx-notiflix.service';
 import { TopicService } from '@services/topic.service';
 import { firstValueFrom, tap, catchError, of } from 'rxjs';
@@ -12,7 +13,7 @@ import { firstValueFrom, tap, catchError, of } from 'rxjs';
 export class DetailComponent implements OnInit {
   @ViewChild('desc') descRef: ElementRef<HTMLParagraphElement>
   key: string = '';
-  data: any;
+  data: TopicDetail = null;
 
   constructor(
     private topicService: TopicService,
