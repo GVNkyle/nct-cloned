@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { imgNotFound } from '@constants/utils';
+import { Artist } from '@models/artist';
 import { ExploreService } from '@services/explore.service';
 import { NgxNotiflixService } from '@services/ngx-notiflix.service';
 import { catchError, firstValueFrom, of, tap } from 'rxjs';
@@ -12,7 +13,7 @@ import { catchError, firstValueFrom, of, tap } from 'rxjs';
 })
 export class MainComponent implements OnInit {
   gender: number = 0;
-  data: any;
+  data: Artist[] = null;
   imgNotFound = imgNotFound;
   constructor(
     private exploreService: ExploreService,
@@ -24,9 +25,9 @@ export class MainComponent implements OnInit {
     this.getArtist();
   }
 
-  async getArtist(){
+  async getArtist() {
     await firstValueFrom(this.exploreService.getExploreArtists(this.gender).pipe(
-      tap(res =>{
+      tap(res => {
         this.data = res;
       }),
       catchError(() => {
@@ -36,7 +37,7 @@ export class MainComponent implements OnInit {
       })
     ));
   }
-  changeGender(type: number){
+  changeGender(type: number) {
     this.gender = type;
     this.data = null;
     this.getArtist();

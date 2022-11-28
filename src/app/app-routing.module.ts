@@ -4,7 +4,7 @@ import { AuthGuard } from '@guards/auth.guard';
 import { DefaultLayoutComponent } from './containers';
 
 const routes: Routes = [
-  { path: "**", redirectTo: "home", pathMatch: "full" },
+  { path: "", redirectTo: "home", pathMatch: "full" },
   {
     path: "",
     component: DefaultLayoutComponent,
@@ -54,7 +54,7 @@ const routes: Routes = [
         loadChildren: () => import('./views/search/search.module').then(m => m.SearchModule)
       },
       {
-        path: 'error',
+        path: '**',
         loadComponent: () => import('./views/error/error.component').then(c => c.ErrorComponent)
       }
     ]

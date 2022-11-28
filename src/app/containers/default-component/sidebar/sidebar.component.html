@@ -35,7 +35,7 @@
         <ng-container *ngFor="let item of sidebarList">
             <li (click)="handleShowChildMenu($event, item)" class="py-2 pl-4 sidebar-parent"
                 [ngClass]="{'bg-gray-200 rounded-sm': item.path === pathname}">
-                <a [routerLink]="item.path ? item.path : '#'" class="flex items-center justify-between">
+                <a [routerLink]="item.path ? item.path : null" class="flex items-center justify-between">
                     <div class="flex items-center font-semibold" [style.color]="item.background">
                         <i class="{{item.icon}} w-5 h-5 mr-2" fontSize="18"></i>
                         <span class="text-black font-normal">{{item.name}}</span>

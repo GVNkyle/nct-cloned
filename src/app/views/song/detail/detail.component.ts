@@ -33,12 +33,12 @@ export class DetailComponent implements OnInit {
     await firstValueFrom(this.songService.getSong(this.key).pipe(
       tap(res => {
         this.data = res;
-        this.data?.song?.artists?.map((item: any) => {
+        this.data?.artists?.map((item: any) => {
           item.link = item.shortLink ? `/artist/${item.shortLink}` : "#"
         });
-        this.artistName = this.data?.song?.artists
+        this.artistName = this.data?.artists
           ?.map((item: any) => item.name)
-          .join(", ");      
+          .join(", ");
       }),
       catchError(() => {
         this.notiflixService.error('Oops! Something error happened!');

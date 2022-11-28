@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Song } from '@models/song';
 import { getMusicFromLocal } from '@constants/utils';
@@ -13,15 +13,11 @@ import { HISTORY } from '@constants/local-storage';
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.scss']
 })
-export class HistoryComponent implements OnInit {
+export class HistoryComponent {
   historyMusic: Song[] = getMusicFromLocal();
   constructor(
     private notiflixService: NgxNotiflixService
   ) { }
-
-  ngOnInit(): void {
-  }
-
   handleDeleteHistory() {
     if (this.historyMusic.length !== 0) {
       this.notiflixService.confirm('Cảnh báo!!', 'Bạn có chắc muốn xóa lịch sử nghe không!', () => {

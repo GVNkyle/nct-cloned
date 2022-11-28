@@ -23,8 +23,8 @@
                                 <img src="{{item.thumbnail || imgNotFound}}" alt="{{item.title}}">
                             </div>
                             <div class="ml-2 flex-1">
-                                <p class="line-clamp-1 text-sm mb-1">{{item.title}}</p>
-                                <p class="line-clamp-1 text-xs">{{item.artistName}}</p>
+                                <p class="line-clamp-1 text-sm mb-1">{{item.title | titlecase}}</p>
+                                <p class="line-clamp-1 text-xs">{{item.artistName | titlecase}}</p>
                             </div>
                         </div>
                     </ng-container>
@@ -35,15 +35,15 @@
                     <!--Thumbnail-->
                     <div class="pr-4 pl-4 pb-4">
                         <div class="w-full aspect-[1/1]">
-                            <img src="{{data?.song?.thumbnail || imgNotFound}}" alt="">
+                            <img src="{{data?.thumbnail || imgNotFound}}" alt="">
                         </div>
                         <div class="mt-5">
-                            <h1 class="font-semibold line-clamp-1">{{data?.song?.title}}</h1>
+                            <h1 class="font-semibold line-clamp-1">{{data?.title | titlecase}}</h1>
                             <p class="text-sm text-gray-400 font-normal line-clamp-1">
                                 {{artist}}
                             </p>
-                            <ng-container *ngIf="data?.song?.title && artist">
-                                <a [routerLink]="['/song/' + data?.song?.key]" class="text-blue-500 text-sm mt-2">
+                            <ng-container *ngIf="data?.title && artist">
+                                <a [routerLink]="['/song/' + data?.key]" class="text-blue-500 text-sm mt-2">
                                     Xem lời bài hát
                                 </a>
                             </ng-container>
@@ -131,7 +131,7 @@
                 [ngClass]="{'hidden': player, 'block': !player}">
                 <div class="flex items-center font-semibold text-sm">
                     <i class="fa-solid fa-music w-5 text-pink-500"></i>
-                    <p class="line-clamp-1">{{data?.song?.title}}</p>
+                    <p class="line-clamp-1">{{data?.title | titlecase}}</p>
                 </div>
             </div>
         </ng-container>

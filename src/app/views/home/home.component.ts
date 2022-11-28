@@ -26,9 +26,9 @@ import { CommonModule } from '@angular/common';
   ]
 })
 export class HomeComponent implements OnInit {
-  data: HomeData;
+  data: HomeData = null;
   constructor(
-    private homeService: HomeService, 
+    private homeService: HomeService,
     private notiflixService: NgxNotiflixService,
     private router: Router
   ) { }

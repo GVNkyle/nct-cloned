@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Topic } from '@models/topics';
 import { NgxNotiflixService } from '@services/ngx-notiflix.service';
 import { TopicService } from '@services/topic.service';
 import { firstValueFrom, tap, catchError, of } from 'rxjs';
@@ -10,7 +11,7 @@ import { firstValueFrom, tap, catchError, of } from 'rxjs';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  data: any;
+  data: Topic[] = null;
 
   constructor(
     private topicService: TopicService,

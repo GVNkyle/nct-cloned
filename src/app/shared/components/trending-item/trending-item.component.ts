@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./trending-item.component.scss']
 })
 export class TrendingItemComponent{
-  @Input() position: string;
+  @Input() position: number;
   @Input() name: string;
   constructor() { }
 

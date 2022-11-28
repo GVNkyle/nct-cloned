@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { tap } from 'rxjs';
+import { firstValueFrom, tap } from 'rxjs';
 import { NgxNotiflixService } from '@services/ngx-notiflix.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class ProfileComponent implements OnInit {
   constructor(private store: Store<{ auth }>, private notiflixService: NgxNotiflixService) { }
 
   async ngOnInit(): Promise<void> {
-    await this.store.select('auth').pipe(tap(state => this.currentUser = state.currentUser));
+    await firstValueFrom(this.store.select('auth').pipe(tap(state => this.currentUser = state.currentUser)));
   }
 
   handleUpdate() {
